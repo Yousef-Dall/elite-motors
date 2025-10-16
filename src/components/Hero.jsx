@@ -3,89 +3,124 @@ import { motion } from "framer-motion";
 import { ArrowRight } from "lucide-react";
 import { useI18n } from "../i18n/I18nProvider";
 
-const fade = {
-  hidden: { opacity: 0, y: 20 },
-  show: { opacity: 1, y: 0, transition: { duration: 0.6 } },
-};
+// ✅ Static import avoids path weirdness with Vite/CRA
+import heroImg from "../assets/hero-lambo.jpg";
+
+const fade = { hidden: { opacity: 0, y: 16 }, show: { opacity: 1, y: 0, transition: { duration: 0.6 } } };
 
 export default function Hero() {
   const { t, lang } = useI18n();
   const isAr = lang === "ar";
 
-  // flip arrow in AR so it points “forward” visually
-  const arrowClass = `h-4 w-4 transition -translate-x-0 group-hover:translate-x-0.5 ${
-    isAr ? "rotate-180" : ""
-  }`;
-
-  // reverse gradient direction for Arabic for a more natural look
-  const highlightClass = isAr
-    ? "bg-gradient-to-l from-cyan-400 to-fuchsia-400 bg-clip-text text-transparent"
-    : "bg-gradient-to-r from-cyan-400 to-fuchsia-400 bg-clip-text text-transparent";
-
   return (
-    <section id="home" className="relative">
+    <section id="home" className="relative overflow-hidden">
+      {/* subtle background vignette */}
+      <div aria-hidden className="pointer-events-none absolute inset-0 -z-10">
+        <div className="absolute inset-0 bg-[radial-gradient(800px_400px_at_50%_-10%,rgba(99,102,241,0.08),transparent)]" />
+        <div className="absolute inset-0 bg-[linear-gradient(180deg,rgba(0,0,0,0.0),rgba(0,0,0,0.04))] dark:bg-[linear-gradient(180deg,rgba(255,255,255,0.02),rgba(255,255,255,0.00))]" />
+      </div>
+
       <div className="mx-auto max-w-7xl px-4 py-20 md:py-28 grid md:grid-cols-2 items-center gap-10">
-        <motion.div
-          variants={fade}
-          initial="hidden"
-          animate="show"
-          className="space-y-6 text-start"
-        >
+        {/* LEFT: copy */}
+        <motion.div variants={fade} initial="hidden" animate="show" className="space-y-6 text-start">
           <h1 className="text-4xl md:text-6xl font-extrabold leading-[1.05] tracking-tight">
-            {t("hero.titleA")} <span className={highlightClass}>{t("hero.titleB")}</span>
+            {t("hero.titleA")}{" "}
+            <span className={`${isAr ? "bg-gradient-to-l" : "bg-gradient-to-r"} from-cyan-500 to-fuchsia-500 bg-clip-text text-transparent`}>
+              {t("hero.titleB")}
+            </span>
           </h1>
 
-          <p className="text-lg md:text-xl text-white/70 max-w-prose">
-            {t("hero.sub")}
-          </p>
+          <p className="text-lg md:text-xl text-neutral-700 dark:text-white/70 max-w-prose">{t("hero.sub")}</p>
 
           <div className="flex flex-wrap items-center gap-3">
             <a
               href="#contact"
-              className="group inline-flex items-center gap-2 px-5 py-3 rounded-2xl bg-gradient-to-r from-cyan-500 to-fuchsia-500 font-semibold shadow-lg hover:shadow-cyan-500/30"
+              className="group inline-flex items-center gap-2 px-5 py-3 rounded-2xl text-white font-semibold
+                         bg-gradient-to-r from-cyan-500 via-indigo-500 to-fuchsia-500 shadow-lg shadow-cyan-500/20
+                         hover:shadow-cyan-500/30 transition"
             >
-              {t("hero.cta1")} <ArrowRight className={arrowClass} />
+              {t("hero.cta1")}
+              <ArrowRight className={`h-4 w-4 transition ${isAr ? "-scale-x-100" : ""} group-hover:translate-x-0.5`} />
             </a>
 
             <a
               href="#services"
-              className="inline-flex items-center gap-2 px-5 py-3 rounded-2xl border border-white/15 bg-white/5 hover:bg-white/10"
+              className="inline-flex items-center gap-2 px-5 py-3 rounded-2xl border transition
+                         bg-white/70 border-black/10 hover:bg-white/90
+                         dark:bg-white/5 dark:border-white/10 dark:hover:bg-white/10"
             >
               {t("hero.cta2")}
             </a>
           </div>
 
-          <div className="flex items-center gap-6 pt-2 text-white/70">
-            <div className="text-sm">{t("hero.badges.0")}</div>
-            <div className="h-1.5 w-1.5 rounded-full bg-white/30" />
-            <div className="text-sm">{t("hero.badges.1")}</div>
-            <div className="h-1.5 w-1.5 rounded-full bg-white/30" />
-            <div className="text-sm">{t("hero.badges.2")}</div>
+          <div className="flex items-center gap-6 pt-2 text-neutral-600 dark:text-white/70">
+            <span className="text-sm">{t("hero.badges.0")}</span>
+            <span className="h-1.5 w-1.5 rounded-full bg-black/20 dark:bg-white/30" />
+            <span className="text-sm">{t("hero.badges.1")}</span>
+            <span className="h-1.5 w-1.5 rounded-full bg-black/20 dark:bg-white/30" />
+            <span className="text-sm">{t("hero.badges.2")}</span>
           </div>
         </motion.div>
 
-        <motion.div variants={fade} initial="hidden" animate="show" className="relative">
-          <div className="relative aspect-[5/3] w-full overflow-hidden rounded-3xl border border-white/10 shadow-2xl">
-            <img
-              src="/images/hero-lambo.jpg"
-              alt="Elite Motors"
-              className="absolute inset-0 h-full w-full object-cover"
-            />
-            {/* readability overlay */}
-            <div className="absolute inset-0 bg-[linear-gradient(0deg,rgba(0,0,0,0.45),rgba(0,0,0,0.15))]" />
-            <div className="absolute bottom-6 left-6 right-6 p-4 rounded-2xl bg-white/5 border border-white/10 backdrop-blur text-start">
-              <div className="text-xs uppercase tracking-widest text-white/70">
-                {t("hero.featured.tag")}
-              </div>
-              <div className="mt-1 text-lg font-semibold">
-                {t("hero.featured.title")}
-              </div>
-              <div className="text-sm text-white/70">
-                {t("hero.featured.sub")}
-              </div>
-            </div>
-          </div>
-        </motion.div>
+        {/* RIGHT: image card with reflection + glass floor */}
+        <motion.div
+  initial={{ opacity: 0, scale: 0.98 }}
+  animate={{ opacity: 1, scale: 1 }}
+  transition={{ duration: 0.8, ease: "easeOut" }}
+  className="relative"
+>
+  <motion.div
+    whileHover={{ y: -6 }}
+    transition={{ type: "spring", stiffness: 240, damping: 18 }}
+    className="relative aspect-[5/3] w-full overflow-visible rounded-3xl"
+  >
+    {/* main image wrapper — NOTE: h-full added */}
+    <div className="relative h-full overflow-hidden rounded-3xl border shadow-2xl border-black/10 dark:border-white/10">
+      <img
+        src="/images/hero-lambo.jpg"  // or your imported heroImg
+        alt="Elite Motors"
+        className="absolute inset-0 z-10 h-full w-full object-cover"
+      />
+
+      {/* caption chip */}
+      <div className="absolute bottom-6 left-6 right-6 p-4 rounded-2xl border border-white/10
+                      backdrop-blur-[4px] bg-transparent text-start z-20">
+        <div className="text-xs uppercase tracking-widest text-white/90 drop-shadow-[0_1px_2px_rgba(0,0,0,0.65)]">
+          {t("hero.featured.tag")}
+        </div>
+        <div className="mt-1 text-lg font-semibold text-white drop-shadow-[0_1px_2px_rgba(0,0,0,0.65)]">
+          {t("hero.featured.title")}
+        </div>
+        <div className="text-sm text-neutral-200 drop-shadow-[0_1px_2px_rgba(0,0,0,0.65)]">
+          {t("hero.featured.sub")}
+        </div>
+      </div>
+    </div>
+
+    {/* reflection + glass floor (unchanged) */}
+ {/* soft reflection (flipped image with gradient mask) */}
+<div className="absolute -bottom-24 left-0 right-0 h-24 overflow-hidden rounded-t-3xl pointer-events-none">
+  <img
+    src={heroImg /* or "/images/hero-lambo.jpg" */}
+    alt=""
+    aria-hidden="true"
+    className="w-full h-[180%] object-cover blur-[1px] opacity-35 saturate-75"
+    style={{
+      transform: "scaleY(-1)",
+      WebkitMaskImage: "linear-gradient(to top, rgba(0,0,0,0.45), rgba(0,0,0,0))",
+      maskImage: "linear-gradient(to top, rgba(0,0,0,0.45), rgba(0,0,0,0))",
+    }}
+  />
+</div>
+
+
+    <div className="absolute -bottom-6 left-6 right-6 h-10 rounded-[999px] opacity-60 blur-md
+                    bg-[radial-gradient(120%_80%_at_50%_100%,rgba(255,255,255,0.35),transparent_60%)]
+                    dark:bg-[radial-gradient(120%_80%_at_50%_100%,rgba(255,255,255,0.18),transparent_60%)]" />
+    <div className="absolute -bottom-2 left-10 right-10 h-px bg-white/40 dark:bg-white/20 blur-[1px] opacity-60" />
+  </motion.div>
+</motion.div>
+
       </div>
     </section>
   );
