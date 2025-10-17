@@ -38,7 +38,6 @@ export default function Services() {
                            dark:bg-white/5 dark:border-white/10"
                 style={{ transformStyle: "preserve-3d" }}
               >
-                {/* subtle glow ring on hover */}
                 <div className="pointer-events-none absolute inset-0 rounded-3xl opacity-0 group-hover:opacity-100 transition
                                 bg-[radial-gradient(300px_150px_at_20%_-10%,rgba(34,211,238,0.15),transparent_60%),
                                     radial-gradient(300px_150px_at_120%_110%,rgba(232,121,249,0.12),transparent_60%)]" />

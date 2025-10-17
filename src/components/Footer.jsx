@@ -18,9 +18,9 @@ export default function Footer() {
       <div className="mx-auto max-w-7xl px-4 space-y-6">
         <div className="flex flex-col md:flex-row items-center justify-between gap-6">
           <div className="flex items-center gap-6">
-            <a href="#" className="hover:text-black dark:hover:text-white">{t("footer.privacy") || "Privacy"}</a>
-            <a href="#" className="hover:text-black dark:hover:text-white">{t("footer.terms") || "Terms"}</a>
-            <a href="#contact" className="hover:text-black dark:hover:text-white">{t("footer.contact") || "Contact"}</a>
+            <a href="#" className="hover:text-black dark:hover:text-white">{t("footer.privacy")}</a>
+            <a href="#" className="hover:text-black dark:hover:text-white">{t("footer.terms")}</a>
+            <a href="#contact" className="hover:text-black dark:hover:text-white">{t("footer.contact")}</a>
           </div>
 
           <div className="flex items-center gap-3">

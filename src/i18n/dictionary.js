@@ -59,6 +59,35 @@ export const DICT = {
         "Secure storage with climate & trickle-charge",
       ],
     },
+    gallery: {
+      tag: "Inside the Workshop",
+      title: "Gallery",
+      prev: "Previous",
+      next: "Next",
+      items: {},
+    },
+    location: {
+      tag: "Visit Us",
+      title: "Our Location",
+      sub: "Find us in Muscat — convenient access, secure indoor drop-off, and concierge reception.",
+      dir: "Get Directions",
+      address: "Address",
+      hours: "Hours",
+      hoursVal: "Sat–Thu • 9:00–18:00",
+    },
+    cta: {
+      tag: "Concierge Appointment",
+      title: "Ready to give your car the treatment it deserves?",
+      sub: "Secure indoor drop-off, transparent diagnostics, and warranty-friendly service logs.",
+      btn: "Book a Visit",
+    },
+    testimonial: {
+      quote: "They treated my car like their own—flawless.",
+      name: "A. Owner",
+      role: "Huracán STO",
+      avatar: "/images/avatar-placeholder.jpg",
+    },
+    marquee: { tag: "Trusted by owners of" },
     contact: {
       title: "Get in Touch",
       intro:
@@ -135,6 +164,35 @@ export const DICT = {
         "تخزين آمن مع تحكم بالمناخ وشحن حافظ",
       ],
     },
+    gallery: {
+      tag: "داخل الورشة",
+      title: "المعرض",
+      prev: "السابق",
+      next: "التالي",
+      items: {},
+    },
+    location: {
+      tag: "زورونا",
+      title: "موقعنا",
+      sub: "نخدمكم في مسقط — وصول ميسّر، تسليم داخلي آمن، واستقبال كونسيرج.",
+      dir: "اتجاهات الوصول",
+      address: "العنوان",
+      hours: "الساعات",
+      hoursVal: "السبت–الخميس • 9:00–18:00",
+    },
+    cta: {
+      tag: "موعد كونسيرج",
+      title: "جاهز لتعطي سيارتك العناية التي تستحقها؟",
+      sub: "تسليم داخلي آمن، تشخيصات شفافة، وسجلات خدمة تحافظ على الضمان.",
+      btn: "احجز زيارة",
+    },
+    testimonial: {
+      quote: "عاملوا سيارتي كأنها لهم — نتيجة مثالية.",
+      name: "A. Owner",
+      role: "هوراكان STO",
+      avatar: "/images/avatar-placeholder.jpg",
+    },
+    marquee: { tag: "موثوق من ملاّك" },
     contact: {
       title: "تواصل معنا",
       intro: "أخبرنا عن سيارتك واحتياجاتك. سنرد خلال 24 ساعة.",
@@ -149,35 +207,5 @@ export const DICT = {
       send: "إرسال الطلب",
     },
     footer: { privacy: "الخصوصية", terms: "الشروط", contact: "تواصل" },
-    services: {
-      title: "خدماتنا",
-      items: {
-        0: {
-          title: "صيانة دقيقة",
-          desc: "تشخيصات بمستوى المصنع وجدولة خدمة للسيارات الفاخرة",
-          tag: "خدمة",
-        },
-        1: {
-          title: "ضبط الأداء",
-          desc: "برمجة ECU وحِزم ديناميكية وضبط محاذاة للحلبة",
-          tag: "أداء",
-        },
-        2: {
-          title: "خدمة كونسيرج",
-          desc: "نقل مغطّى وتسليم واستلام راقٍ",
-          tag: "كونسيرج",
-        },
-        3: {
-          title: "تلميع و PPF",
-          desc: "تصحيح الطلاء وسيراميك وPPF مطفي",
-          tag: "مظهر",
-        },
-        4: {
-          title: "خبرة هجينة وV12",
-          desc: "من SF90 إلى Aventador — فنيون معتمدون للجهد العالي",
-          tag: "اختصاص",
-        },
-      },
-    },
   },
 };

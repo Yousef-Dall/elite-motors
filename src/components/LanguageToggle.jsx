@@ -6,21 +6,15 @@ export default function LanguageToggle() {
   const { lang, setLang, t } = useI18n();
   const next = lang === "en" ? "ar" : "en";
 
-  // Persist language across reloads
   useEffect(() => {
-    try {
-      localStorage.setItem("elite_lang", lang);
-    } catch (_) {}
+    try { localStorage.setItem("elite_lang", lang); } catch {}
   }, [lang]);
 
-  // Optional: On first mount, hydrate from localStorage (safe no-op if unchanged)
   useEffect(() => {
     try {
       const stored = localStorage.getItem("elite_lang");
-      if (stored && (stored === "en" || stored === "ar") && stored !== lang) {
-        setLang(stored);
-      }
-    } catch (_) {}
+      if (stored && (stored === "en" || stored === "ar") && stored !== lang) setLang(stored);
+    } catch {}
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 

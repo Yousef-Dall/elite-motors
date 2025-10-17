@@ -2,8 +2,7 @@ import React, { useMemo, useRef } from "react";
 import LanguageToggle from "./LanguageToggle";
 import { useI18n } from "../i18n/I18nProvider";
 import useScrollSpyAuto from "../hooks/useScrollSpy";
-
-// Use your JPG logo (adjust the path if needed)
+import ThemeToggle from "./ThemeToggle";
 import logoJpg from "../assets/logo.jpg";
 
 export default function Navbar() {
@@ -18,7 +17,7 @@ export default function Navbar() {
       { label: t("navbar.vm"), href: "#vm", id: "vm" },
       { label: t("navbar.who"), href: "#who", id: "who" },
       { label: t("navbar.location"), href: "#location", id: "location" },
-      { label: t("navbar.contact"), href: "#contact", id: "contact" },
+      { label: t("navbar.contact"), href: "#contact", id: "contact" }
     ],
     [t]
   );
@@ -29,7 +28,6 @@ export default function Navbar() {
   });
 
   return (
-    // Keep layout LTR so logo stays left, menu stays right
     <header
       ref={headerRef}
       dir="ltr"
@@ -37,22 +35,18 @@ export default function Navbar() {
       data-sticky="true"
     >
       <div className="mx-auto max-w-7xl px-4 py-3 flex items-center gap-6">
-        {/* Logo (bigger) */}
         <a href="#home" className="flex items-center gap-3 group shrink-0">
           <img
             src={logoJpg}
             alt="Elite Motors"
-            className="h-12 md:h-14 w-auto rounded-md object-contain
-                       drop-shadow-[0_1px_1px_rgba(0,0,0,0.35)]"
+            className="h-12 md:h-14 w-auto rounded-md object-contain drop-shadow-[0_1px_1px_rgba(0,0,0,0.35)]"
             loading="eager"
             fetchPriority="high"
           />
           <span className="sr-only">Elite Motors</span>
         </a>
 
-        {/* Nav on the right */}
-        <nav className="ml-auto hidden md:flex items-center gap-6">
-          {/* Wrap just the links so we can flip their order in AR without moving the toggle */}
+        <nav aria-label="Main navigation" className="ml-auto hidden md:flex items-center gap-6">
           <div className={`flex items-center gap-6 ${lang === "ar" ? "flex-row-reverse" : "flex-row"}`}>
             {nav.map((n) => {
               const isActive = activeId === n.id;
@@ -80,8 +74,7 @@ export default function Navbar() {
               );
             })}
           </div>
-
-          {/* Language toggle stays pinned at the far right */}
+          <ThemeToggle />
           <LanguageToggle />
         </nav>
       </div>
