@@ -24,10 +24,17 @@ export default function Navbar() {
     [t]
   );
 
+
+
   const activeId = useScrollSpyAuto(nav.map((n) => n.id), {
     headerRef,
-    lineRatio: 0.35,
+    lineRatio: 0.60,       // reading line lower => later switch
+    switchOffsetPx: 220,   // require this many px inside next section
+    switchFraction: 0.28,  // or ~28% of section height (whichever is larger)
+    hysteresisPx: 120,     // keeps current section a bit longer
   });
+
+
 
   // --- Keep a CSS variable in sync with the real header height ---
   useEffect(() => {
