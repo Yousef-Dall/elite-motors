@@ -55,3 +55,4 @@ html { scroll-behavior: smooth; }
 /* Sticky-header aware anchor offset */
 :root { --em-header-h: 64px; }                /* default, overridden from JS */
 .scroll-offset { scroll-margin-top: calc(var(--em-header-h) + 8px); }  /* tiny breathing space */
+html, body { overflow-x: hidden; }
