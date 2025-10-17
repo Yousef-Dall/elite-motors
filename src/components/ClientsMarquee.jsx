@@ -2,11 +2,14 @@ import React, { useMemo } from "react";
 import { useI18n } from "../i18n/I18nProvider";
 
 const BRANDS = [
-  { name: "Ferrari",       file: "ferrari.svg" },
-  { name: "McLaren",       file: "mclaren.svg" },
-  { name: "Porsche",       file: "porsche.svg" },
-  { name: "Aston Martin",  file: "aston-martin.svg" },
-  { name: "Lamborghini",   file: "lamborghini.svg" },
+  { name: "Ferrari",       file: "ferrari.png" },
+  { name: "McLaren",       file: "mclaren.png" },
+  { name: "Porsche",       file: "porsche.png" },
+  { name: "Aston Martin",  file: "aston-martin.png" },
+  { name: "Lamborghini",   file: "lamborgini.png" },
+   { name: "Bugatti", file: "bugatti.png" },
+{ name: "Koenigsegg", file: "koenigsegg.png" },
+{ name: "Pagani", file: "pagani.png" },
 ];
 
 function LogoPill({ name }) {

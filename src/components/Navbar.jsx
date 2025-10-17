@@ -1,4 +1,4 @@
-import React, { useMemo, useRef, useState } from "react";
+import React, { useMemo, useRef, useState, useEffect } from "react";
 import LanguageToggle from "./LanguageToggle";
 import { useI18n } from "../i18n/I18nProvider";
 import useScrollSpyAuto from "../hooks/useScrollSpy";
@@ -29,7 +29,44 @@ export default function Navbar() {
     lineRatio: 0.35,
   });
 
-  const closeMenu = () => setOpen(false);
+  // --- Keep a CSS variable in sync with the real header height ---
+  useEffect(() => {
+    const el = headerRef.current;
+    if (!el) return;
+    const setVar = () => {
+      const h = Math.ceil(el.getBoundingClientRect().height || 0);
+      document.documentElement.style.setProperty("--em-header-h", `${h}px`);
+    };
+    setVar();
+    const ro = new ResizeObserver(setVar);
+    ro.observe(el);
+    window.addEventListener("resize", setVar);
+    return () => {
+      ro.disconnect();
+      window.removeEventListener("resize", setVar);
+    };
+  }, [lang]); // re-measure if language changes fonts/line breaks
+
+  // --- Precise scroll that accounts for header height ---
+  const handleNavClick = (e, href) => {
+    const id = href?.startsWith("#") ? href.slice(1) : null;
+    if (!id) return; // let normal link work
+    const target = document.getElementById(id);
+    if (!target) return;
+    e.preventDefault();
+
+    // Close mobile sheet first (so height is correct)
+    setOpen(false);
+
+    // Use the measured header height (CSS var), with tiny extra space
+    const headerH =
+      parseFloat(
+        getComputedStyle(document.documentElement).getPropertyValue("--em-header-h")
+      ) || 64;
+
+    const y = target.getBoundingClientRect().top + window.scrollY - (headerH + 8);
+    window.scrollTo({ top: y, behavior: "smooth" });
+  };
 
   return (
     <header
@@ -40,7 +77,7 @@ export default function Navbar() {
     >
       <div className="mx-auto max-w-7xl px-4 py-3 flex items-center gap-3">
         {/* Logo */}
-        <a href="#home" className="flex items-center gap-3 group shrink-0">
+        <a href="#home" className="flex items-center gap-3 group shrink-0" onClick={(e)=>handleNavClick(e, "#home")}>
           <img
             src={logoJpg}
             alt="Elite Motors"
@@ -52,21 +89,15 @@ export default function Navbar() {
         </a>
 
         {/* Desktop nav */}
-        <nav
-          aria-label="Main navigation"
-          className="ml-auto hidden md:flex items-center gap-6"
-        >
-          <div
-            className={`flex items-center gap-6 ${
-              lang === "ar" ? "flex-row-reverse" : "flex-row"
-            }`}
-          >
+        <nav aria-label="Main navigation" className="ml-auto hidden md:flex items-center gap-6">
+          <div className={`flex items-center gap-6 ${lang === "ar" ? "flex-row-reverse" : "flex-row"}`}>
             {nav.map((n) => {
               const isActive = activeId === n.id;
               return (
                 <a
                   key={n.href}
                   href={n.href}
+                  onClick={(e) => handleNavClick(e, n.href)}
                   aria-current={isActive ? "page" : undefined}
                   className={[
                     "relative text-sm transition-colors",
@@ -106,12 +137,7 @@ export default function Navbar() {
       </div>
 
       {/* Mobile slide-down panel */}
-      <div
-        className={[
-          "md:hidden overflow-hidden transition-[max-height] duration-300 ease-out",
-          open ? "max-h-[60vh]" : "max-h-0",
-        ].join(" ")}
-      >
+      <div className={["md:hidden overflow-hidden transition-[max-height] duration-300 ease-out", open ? "max-h-[60vh]" : "max-h-0"].join(" ")}>
         <div className="mx-auto max-w-7xl px-4 pb-3">
           <div className="grid gap-2 pt-1">
             {nav.map((n) => {
@@ -120,7 +146,7 @@ export default function Navbar() {
                 <a
                   key={n.href}
                   href={n.href}
-                  onClick={closeMenu}
+                  onClick={(e) => handleNavClick(e, n.href)}
                   className={[
                     "block rounded-xl px-3 py-2 text-sm",
                     "bg-white/5 hover:bg-white/10 border border-white/10",

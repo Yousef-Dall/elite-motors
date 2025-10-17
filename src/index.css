@@ -52,3 +52,6 @@ html { scroll-behavior: smooth; }
   box-shadow:0 0 0 2px rgba(6,182,212,.5);
 }
 .dark .brand-img-auto-light { filter: invert(1) brightness(1.1); }
+/* Sticky-header aware anchor offset */
+:root { --em-header-h: 64px; }                /* default, overridden from JS */
+.scroll-offset { scroll-margin-top: calc(var(--em-header-h) + 8px); }  /* tiny breathing space */
