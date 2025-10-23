@@ -10,7 +10,7 @@ export default function Hero() {
   const isAr = lang === "ar";
 
   return (
-    <section id="home" className="relative overflow-hidden">
+    <section id="home" tabIndex="-1" className="relative overflow-hidden scroll-offset">
       <div aria-hidden className="pointer-events-none absolute inset-0 -z-10">
         <div className="absolute inset-0 bg-[radial-gradient(800px_400px_at_50%_-10%,rgba(99,102,241,0.08),transparent)]" />
         <div className="absolute inset-0 bg-[linear-gradient(180deg,rgba(0,0,0,0.0),rgba(0,0,0,0.04))] dark:bg-[linear-gradient(180deg,rgba(255,255,255,0.02),rgba(255,255,255,0.00))]" />
@@ -61,11 +61,7 @@ export default function Hero() {
         <motion.div initial={{ opacity: 0, scale: 0.98 }} animate={{ opacity: 1, scale: 1 }} transition={{ duration: 0.8, ease: "easeOut" }} className="relative">
           <motion.div whileHover={{ y: -6 }} transition={{ type: "spring", stiffness: 240, damping: 18 }} className="relative aspect-[5/3] w-full overflow-visible rounded-3xl">
             <div className="relative h-full overflow-hidden rounded-3xl border shadow-2xl border-black/10 dark:border-white/10">
-              <img
-                src="/images/hero-lambo.jpg"
-                alt="Elite Motors"
-                className="absolute inset-0 z-10 h-full w-full object-cover"
-              />
+            <img src="/images/hero-lambo.jpg" width="1600" height="960" className="absolute inset-0 z-10 h-full w-full object-cover" alt="Elite Motors" />
 
               {/* <div className="absolute bottom-6 left-6 right-6 p-4 rounded-2xl border border-white/10 backdrop-blur-[4px] bg-transparent text-start z-20">
                 <div className="text-xs uppercase tracking-widest text-white/90 drop-shadow-[0_1px_2px_rgba(0,0,0,0.65)]">

@@ -77,11 +77,15 @@ export default function Navbar() {
 
   return (
     <header
+    
       ref={headerRef}
       dir="ltr"
       className="fixed top-0 left-0 right-0 z-50 border-b border-white/10 backdrop-blur supports-[backdrop-filter]:bg-neutral-900/40"
       data-sticky="true"
     >
+    <a href="#home" className="sr-only">
+  Skip to content
+</a>
       <div className="mx-auto max-w-7xl px-4 py-3 flex items-center gap-3">
         {/* Logo */}
         <a href="#home" className="flex items-center gap-3 group shrink-0" onClick={(e)=>handleNavClick(e, "#home")}>

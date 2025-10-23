@@ -1,31 +1,88 @@
 <!DOCTYPE html>
-<html lang="en" dir="ltr">
+<html lang="en" class="dark">
   <head>
-    <meta charset="UTF-8" />
+    <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="theme-color" content="#0f172a" />
 
     <title>Elite Motors — Bespoke Care for Exotic Machines</title>
     <meta
       name="description"
-      content="Elite Motors specializes in maintenance, performance tuning, and concierge care for supercars and hypercars in Muscat."
+      content="Elite Motors in Muscat: factory-grade maintenance, performance tuning, and concierge care for supercars and hypercars."
     />
+
+    <!-- Icons / manifest (optional; won’t block render if missing) -->
+    <link rel="icon" href="/favicon.ico" sizes="any" />
+    <link rel="icon" href="/icon.svg" type="image/svg+xml" />
+    <link rel="apple-touch-icon" href="./public/apple-touch-icon.png.png" />
+    <link rel="manifest" href="./public/site.webmanifest" />
+
+    <!-- Canonical (replace later) -->
+    <link rel="canonical" href="https://example.com/" />
 
     <!-- Open Graph -->
-    <meta property="og:title" content="Elite Motors" />
+    <meta
+      property="og:title"
+      content="Elite Motors — Bespoke Care for Exotic Machines"
+    />
     <meta
       property="og:description"
-      content="Bespoke care for exotic machines."
+      content="Factory-grade maintenance, performance tuning, and concierge care in Muscat."
     />
-    <meta property="og:image" content="/images/hero-lambo.jpg" />
     <meta property="og:type" content="website" />
+    <meta property="og:url" content="https://example.com/" />
+    <meta property="og:image" content="https://example.com/og.jpg" />
 
-    <!-- Theme color -->
-    <meta name="theme-color" content="#0ea5e9" />
+    <!-- Twitter -->
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta
+      name="twitter:title"
+      content="Elite Motors — Bespoke Care for Exotic Machines"
+    />
+    <meta
+      name="twitter:description"
+      content="Factory-grade maintenance, performance tuning, and concierge care in Muscat."
+    />
+    <meta name="twitter:image" content="https://example.com/og.jpg" />
 
-    <!-- Preload hero (perf) -->
-    <link rel="preload" as="image" href="/images/hero-lambo.jpg" />
-
-    <link rel="icon" href="data:," />
+    <!-- JSON-LD (valid JSON only; plain quotes) -->
+    <script type="application/ld+json">
+      {
+        "@context": "https://schema.org",
+        "@type": "AutoRepair",
+        "name": "Elite Motors",
+        "image": "https://example.com/og.jpg",
+        "url": "https://example.com/",
+        "telephone": "+96800000000",
+        "email": "elitemotors.om@gmail.com",
+        "address": {
+          "@type": "PostalAddress",
+          "addressLocality": "Muscat",
+          "addressCountry": "OM"
+        },
+        "geo": {
+          "@type": "GeoCoordinates",
+          "latitude": 23.478528,
+          "longitude": 58.260806
+        },
+        "openingHoursSpecification": [
+          {
+            "@type": "OpeningHoursSpecification",
+            "dayOfWeek": [
+              "Saturday",
+              "Sunday",
+              "Monday",
+              "Tuesday",
+              "Wednesday",
+              "Thursday"
+            ],
+            "opens": "09:00",
+            "closes": "18:00"
+          }
+        ],
+        "areaServed": "GCC"
+      }
+    </script>
   </head>
   <body>
     <div id="root"></div>

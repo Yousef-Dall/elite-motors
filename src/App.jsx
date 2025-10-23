@@ -12,10 +12,12 @@ import Testimonial from "./components/Testimonial";
 import Contact from "./components/Contact";
 import CTA from "./components/CTA";
 import Footer from "./components/Footer";
+import WhatsAppFab from "./components/WhatsAppFab";
+import MobileQuickBar from "./components/MobileQuickBar";
 
 export default function App() {
   return (
-    <div className="min-h-screen em-noise bg-white text-neutral-900 dark:bg-neutral-950 dark:text-white overflow-x-hidden overflow-y-visible">
+    <div className="min-h-screen em-noise bg-white text-neutral-900 dark:bg-neutral-950 dark:text-white overflow-x-hidden pb-16 md:pb-0">
       <div aria-hidden className="fixed inset-0 -z-10">
         <div className="absolute -top-32 -left-32 h-96 w-96 blur-[140px] bg-cyan-600/30" />
         <div className="absolute top-1/3 -right-24 h-80 w-80 blur-[120px] bg-fuchsia-600/30" />
@@ -37,6 +39,8 @@ export default function App() {
         <CTA />
       </main>
       <Footer />
+      <WhatsAppFab />
+      <MobileQuickBar />
     </div>
   );
 }

@@ -153,7 +153,8 @@ export default function Gallery() {
             {slides.map((s, i) => (
               <figure key={i} data-slide={i} className="relative snap-center shrink-0 w-[82%] sm:w-[70%] md:w-[55%] lg:w-[45%] xl:w-[38%]">
                 <div className="relative aspect-[5/3] overflow-hidden rounded-2xl">
-                  <img src={s.src} alt={s.alt} loading="lazy" className="absolute inset-0 h-full w-full object-cover" />
+                  <img src={s.src} alt={s.alt} loading="lazy" width="1200" height="720"
+  className="absolute inset-0 h-full w-full object-cover" />
                 </div>
                 {(s.title || s.cap) && (
                   <figcaption className="mt-3 text-start">

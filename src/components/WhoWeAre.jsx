@@ -25,11 +25,8 @@ export default function WhoWeAre() {
         <motion.div variants={fade} initial="hidden" whileInView="show" viewport={{ once: true }} className="relative">
           <motion.div whileHover={{ y: -6 }} transition={{ type: "spring", stiffness: 240, damping: 18 }} className="relative aspect-[4/3] w-full rounded-3xl overflow-visible">
             <div className="relative h-full overflow-hidden rounded-3xl border border-black/10 dark:border-white/10 shadow-xl">
-              <img
-                src="/images/shop-interior.jpg"
-                alt={t("who.imgAlt") || "Workshop"}
-                className="absolute inset-0 z-10 h-full w-full object-cover"
-              />
+            <img src="/images/shop-interior.jpg" width="1400" height="1050"
+   className="absolute inset-0 z-10 h-full w-full object-cover" alt={t("who.imgAlt") || "Workshop"} />
             </div>
             <div className="absolute -bottom-20 left-0 right-0 h-20 overflow-hidden rounded-t-3xl pointer-events-none">
               <img
