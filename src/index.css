@@ -56,3 +56,8 @@ html { scroll-behavior: smooth; }
 :root { --em-header-h: 64px; }                /* default, overridden from JS */
 .scroll-offset { scroll-margin-top: calc(var(--em-header-h) + 8px); }  /* tiny breathing space */
 html, body { overflow-x: hidden; }
+/* Clamp horizontal only; keep vertical scroll so sticky can work */
+html, body {
+  overflow-x: hidden;
+  overflow-y: auto;
+}

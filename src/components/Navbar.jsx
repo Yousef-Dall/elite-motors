@@ -79,7 +79,7 @@ export default function Navbar() {
     <header
       ref={headerRef}
       dir="ltr"
-      className="sticky top-0 z-50 border-b border-white/10 backdrop-blur supports-[backdrop-filter]:bg-neutral-900/40"
+      className="fixed top-0 left-0 right-0 z-50 border-b border-white/10 backdrop-blur supports-[backdrop-filter]:bg-neutral-900/40"
       data-sticky="true"
     >
       <div className="mx-auto max-w-7xl px-4 py-3 flex items-center gap-3">

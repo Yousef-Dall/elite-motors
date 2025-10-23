@@ -67,7 +67,7 @@ export default function Hero() {
                 className="absolute inset-0 z-10 h-full w-full object-cover"
               />
 
-              <div className="absolute bottom-6 left-6 right-6 p-4 rounded-2xl border border-white/10 backdrop-blur-[4px] bg-transparent text-start z-20">
+              {/* <div className="absolute bottom-6 left-6 right-6 p-4 rounded-2xl border border-white/10 backdrop-blur-[4px] bg-transparent text-start z-20">
                 <div className="text-xs uppercase tracking-widest text-white/90 drop-shadow-[0_1px_2px_rgba(0,0,0,0.65)]">
                   {t("hero.featured.tag")}
                 </div>
@@ -77,7 +77,7 @@ export default function Hero() {
                 <div className="text-sm text-neutral-200 drop-shadow-[0_1px_2px_rgba(0,0,0,0.65)]">
                   {t("hero.featured.sub")}
                 </div>
-              </div>
+              </div> */}
             </div>
 
             {/* soft reflection */}
