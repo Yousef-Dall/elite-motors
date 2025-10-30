@@ -1,6 +1,4 @@
-// src/theme/ThemeProvider.jsx
 import React, { createContext, useContext, useEffect, useMemo, useState } from "react";
-
 const ThemeCtx = createContext(null);
 
 function getInitialTheme() {
@@ -20,19 +18,9 @@ export function ThemeProvider({ children }) {
 
   useEffect(() => {
     const html = document.documentElement;
-
-    // Apply BOTH strategies so `dark:` works regardless of mapping.
-    if (theme === "dark") {
-      html.setAttribute("data-theme", "dark");
-      html.classList.add("dark");
-    } else {
-      html.removeAttribute("data-theme");
-      html.classList.remove("dark");
-    }
-
-    try {
-      localStorage.setItem("elite_theme", theme);
-    } catch {}
+    if (theme === "dark") { html.setAttribute("data-theme", "dark"); html.classList.add("dark"); }
+    else { html.removeAttribute("data-theme"); html.classList.remove("dark"); }
+    try { localStorage.setItem("elite_theme", theme); } catch {}
   }, [theme]);
 
   const value = useMemo(() => ({ theme, setTheme }), [theme]);

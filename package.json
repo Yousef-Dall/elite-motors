@@ -1,19 +1,24 @@
 {
-  "name": "elitemotors",
+  "name": "elite-motors",
   "private": true,
-  "version": "0.0.0",
+  "version": "1.0.0",
+  "license": "UNLICENSED",
   "type": "module",
   "scripts": {
     "dev": "vite",
     "build": "vite build",
-    "lint": "eslint .",
-    "preview": "vite preview"
+    "preview": "vite preview",
+    "lint": "eslint ."
   },
   "dependencies": {
     "framer-motion": "^12.23.24",
     "lucide-react": "^0.545.0",
+    "nodemailer": "^7.0.10",
     "react": "^19.1.1",
-    "react-dom": "^19.1.1"
+    "react-dom": "^19.1.1",
+    "react-helmet-async": "^2.0.5",
+    "react-router-dom": "^7.9.4",
+    "zod": "^3.23.8"
   },
   "devDependencies": {
     "@eslint/js": "^9.36.0",

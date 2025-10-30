@@ -1,10 +1,16 @@
-import { ShieldCheck, Sparkles, Gauge, Fuel, Wrench } from "lucide-react";
+import {
+  ShieldCheck,
+  Sparkles,
+  Gauge,
+  Wrench,
+  BatteryCharging,
+} from "lucide-react";
 
 export const SERVICES = [
   {
     icon: Wrench,
     title: "Precision Maintenance",
-    desc: "Factory‑grade diagnostics & scheduled servicing for exotics.",
+    desc: "Factory-grade diagnostics & scheduled servicing for exotics.",
     tag: "Service",
   },
   {
@@ -16,7 +22,7 @@ export const SERVICES = [
   {
     icon: ShieldCheck,
     title: "Concierge Care",
-    desc: "Covered transport, white‑glove pick up & return.",
+    desc: "Covered transport, white-glove pick up & return.",
     tag: "Concierge",
   },
   {
@@ -26,9 +32,9 @@ export const SERVICES = [
     tag: "Aesthetics",
   },
   {
-    icon: Fuel,
+    icon: BatteryCharging,
     title: "Hybrid & V12 Expertise",
-    desc: "From SF90 to Aventador—high‑voltage trained.",
+    desc: "From SF90 to Aventador—high-voltage trained.",
     tag: "Specialist",
   },
 ];

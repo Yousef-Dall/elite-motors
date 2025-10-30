@@ -58,7 +58,36 @@ export const DICT = {
         "Partnerships with global motorsport suppliers",
         "Secure storage with climate & trickle-charge",
       ],
+      imgAlt: "Workshop interior",
     },
+    gallery: {
+      tag: "Inside the Workshop",
+      title: "Gallery",
+      prev: "Previous",
+      next: "Next",
+    },
+    location: {
+      tag: "Visit Us",
+      title: "Our Location",
+      sub: "Find us in Muscat — convenient access, secure indoor drop-off, and concierge reception.",
+      dir: "Get Directions",
+      address: "Address",
+      hours: "Hours",
+      hoursVal: "Sat–Thu • 9:00–18:00",
+    },
+    cta: {
+      tag: "Concierge Appointment",
+      title: "Ready to give your car the treatment it deserves?",
+      sub: "Secure indoor drop-off, transparent diagnostics, and warranty-friendly service logs.",
+      btn: "Book a Visit",
+    },
+    testimonial: {
+      quote: "They treated my car like their own—flawless.",
+      name: "A. Owner",
+      role: "Huracán STO",
+      avatar: "/images/avatar-placeholder.jpg",
+    },
+    marquee: { tag: "Trusted by owners of" },
     contact: {
       title: "Get in Touch",
       intro:
@@ -72,8 +101,22 @@ export const DICT = {
       placeholderVehicle: "e.g., Ferrari 296 GTB",
       placeholderHelp: "Maintenance, tuning, detailing…",
       send: "Send Request",
+      sending: "Sending…",
+      ok: "Thanks — we’ll get back to you within 24 hours.",
+      err: "Something went wrong. Please try again or email us directly.",
     },
     footer: { privacy: "Privacy", terms: "Terms", contact: "Contact" },
+    notfound: {
+      title: "404 — Page Not Found",
+      desc: "The page you’re trying to reach doesn’t exist or may have been moved.",
+      home: "← Back to Home",
+    },
+    blog: {
+      title: "Articles",
+      sub: "Build stories, ownership tips, and workshop updates.",
+      readMore: "Read more",
+    },
+    article: { back: "← Back to Articles", notFoundTitle: "Article not found" },
   },
   ar: {
     navbar: {
@@ -134,7 +177,36 @@ export const DICT = {
         "شراكات مع موردي رياضة السيارات",
         "تخزين آمن مع تحكم بالمناخ وشحن حافظ",
       ],
+      imgAlt: "داخل الورشة",
     },
+    gallery: {
+      tag: "داخل الورشة",
+      title: "المعرض",
+      prev: "السابق",
+      next: "التالي",
+    },
+    location: {
+      tag: "زورونا",
+      title: "موقعنا",
+      sub: "نخدمكم في مسقط — وصول ميسّر، تسليم داخلي آمن، واستقبال كونسيرج.",
+      dir: "اتجاهات الوصول",
+      address: "العنوان",
+      hours: "الساعات",
+      hoursVal: "السبت–الخميس • 9:00–18:00",
+    },
+    cta: {
+      tag: "موعد كونسيرج",
+      title: "جاهز لتعطي سيارتك العناية التي تستحقها؟",
+      sub: "تسليم داخلي آمن، تشخيصات شفافة، وسجلات خدمة تحافظ على الضمان.",
+      btn: "احجز زيارة",
+    },
+    testimonial: {
+      quote: "عاملوا سيارتي كأنها لهم — نتيجة مثالية.",
+      name: "A. Owner",
+      role: "هوراكان STO",
+      avatar: "/images/avatar-placeholder.jpg",
+    },
+    marquee: { tag: "موثوق من ملاّك" },
     contact: {
       title: "تواصل معنا",
       intro: "أخبرنا عن سيارتك واحتياجاتك. سنرد خلال 24 ساعة.",
@@ -147,37 +219,24 @@ export const DICT = {
       placeholderVehicle: "مثال: Ferrari 296 GTB",
       placeholderHelp: "صيانة، ضبط أداء، تلميع…",
       send: "إرسال الطلب",
+      sending: "جارٍ الإرسال…",
+      ok: "شكرًا — سنعود إليك خلال 24 ساعة.",
+      err: "حدث خطأ. جرّب مرة أخرى أو راسلنا مباشرة.",
     },
     footer: { privacy: "الخصوصية", terms: "الشروط", contact: "تواصل" },
-    services: {
-      title: "خدماتنا",
-      items: {
-        0: {
-          title: "صيانة دقيقة",
-          desc: "تشخيصات بمستوى المصنع وجدولة خدمة للسيارات الفاخرة",
-          tag: "خدمة",
-        },
-        1: {
-          title: "ضبط الأداء",
-          desc: "برمجة ECU وحِزم ديناميكية وضبط محاذاة للحلبة",
-          tag: "أداء",
-        },
-        2: {
-          title: "خدمة كونسيرج",
-          desc: "نقل مغطّى وتسليم واستلام راقٍ",
-          tag: "كونسيرج",
-        },
-        3: {
-          title: "تلميع و PPF",
-          desc: "تصحيح الطلاء وسيراميك وPPF مطفي",
-          tag: "مظهر",
-        },
-        4: {
-          title: "خبرة هجينة وV12",
-          desc: "من SF90 إلى Aventador — فنيون معتمدون للجهد العالي",
-          tag: "اختصاص",
-        },
-      },
+    notfound: {
+      title: "الصفحة غير موجودة",
+      desc: "الصفحة التي تبحث عنها غير موجودة أو قد تم نقلها.",
+      home: "← العودة إلى الصفحة الرئيسية",
+    },
+    blog: {
+      title: "المقالات",
+      sub: "مشاريع التعديل، نصائح العناية، وتحديثات الورشة.",
+      readMore: "اقرأ المزيد",
+    },
+    article: {
+      back: "← الرجوع إلى المقالات",
+      notFoundTitle: "المقال غير موجود",
     },
   },
 };
