@@ -58,17 +58,12 @@ export const DICT = {
         "Partnerships with global motorsport suppliers",
         "Secure storage with climate & trickle-charge",
       ],
-      imgAlt: "Workshop interior",
     },
     gallery: {
       tag: "Inside the Workshop",
       title: "Gallery",
       prev: "Previous",
       next: "Next",
-<<<<<<< HEAD
-=======
-      items: {},
->>>>>>> 2e809e278af7df7a7284c2c847d0d0c2b2c9870c
     },
     location: {
       tag: "Visit Us",
@@ -105,9 +100,6 @@ export const DICT = {
       placeholderVehicle: "e.g., Ferrari 296 GTB",
       placeholderHelp: "Maintenance, tuning, detailing…",
       send: "Send Request",
-      sending: "Sending…",
-      ok: "Thanks — we’ll get back to you within 24 hours.",
-      err: "Something went wrong. Please try again or email us directly.",
     },
     footer: { privacy: "Privacy", terms: "Terms", contact: "Contact" },
     notfound: {
@@ -120,8 +112,12 @@ export const DICT = {
       sub: "Build stories, ownership tips, and workshop updates.",
       readMore: "Read more",
     },
-    article: { back: "← Back to Articles", notFoundTitle: "Article not found" },
+    article: {
+      back: "← Back to Articles",
+      notFoundTitle: "Article not found",
+    },
   },
+
   ar: {
     navbar: {
       home: "الرئيسية",
@@ -181,17 +177,12 @@ export const DICT = {
         "شراكات مع موردي رياضة السيارات",
         "تخزين آمن مع تحكم بالمناخ وشحن حافظ",
       ],
-      imgAlt: "داخل الورشة",
     },
     gallery: {
       tag: "داخل الورشة",
       title: "المعرض",
       prev: "السابق",
       next: "التالي",
-<<<<<<< HEAD
-=======
-      items: {},
->>>>>>> 2e809e278af7df7a7284c2c847d0d0c2b2c9870c
     },
     location: {
       tag: "زورونا",
@@ -227,12 +218,8 @@ export const DICT = {
       placeholderVehicle: "مثال: Ferrari 296 GTB",
       placeholderHelp: "صيانة، ضبط أداء، تلميع…",
       send: "إرسال الطلب",
-      sending: "جارٍ الإرسال…",
-      ok: "شكرًا — سنعود إليك خلال 24 ساعة.",
-      err: "حدث خطأ. جرّب مرة أخرى أو راسلنا مباشرة.",
     },
     footer: { privacy: "الخصوصية", terms: "الشروط", contact: "تواصل" },
-<<<<<<< HEAD
     notfound: {
       title: "الصفحة غير موجودة",
       desc: "الصفحة التي تبحث عنها غير موجودة أو قد تم نقلها.",
@@ -247,7 +234,5 @@ export const DICT = {
       back: "← الرجوع إلى المقالات",
       notFoundTitle: "المقال غير موجود",
     },
-=======
->>>>>>> 2e809e278af7df7a7284c2c847d0d0c2b2c9870c
   },
 };

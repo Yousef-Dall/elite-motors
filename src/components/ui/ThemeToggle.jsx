@@ -6,6 +6,7 @@ export default function ThemeToggle() {
   const { theme, setTheme } = useTheme();
   const isDark = theme === "dark";
   const toggle = () => setTheme(isDark ? "light" : "dark");
+
   return (
     <button
       onClick={toggle}
@@ -17,3 +18,4 @@ export default function ThemeToggle() {
     </button>
   );
 }
+

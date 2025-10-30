@@ -67,5 +67,3 @@ const MotionSection = forwardRef(function MotionSection(
 });
 
 export default MotionSection;
-
-

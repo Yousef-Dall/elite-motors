@@ -1,3 +1,4 @@
+// src/components/ui/LanguageToggle.jsx
 import React, { useEffect } from "react";
 import { Languages } from "lucide-react";
 import { useI18n } from "../../providers/I18nProvider.jsx";
@@ -6,15 +7,29 @@ export default function LanguageToggle() {
   const { lang, setLang, t } = useI18n();
   const next = lang === "en" ? "ar" : "en";
 
+  // Persist current language
   useEffect(() => {
-    try { localStorage.setItem("elite_lang", lang); } catch {}
+    try {
+      localStorage.setItem("elite_lang", lang);
+    } catch {
+      /* ignore storage errors */
+    }
   }, [lang]);
 
+  // Hydrate from storage on mount (in case provider default ≠ stored pref)
   useEffect(() => {
     try {
       const stored = localStorage.getItem("elite_lang");
-      if (stored && (stored === "en" || stored === "ar") && stored !== lang) setLang(stored);
-    } catch {}
+      if (
+        stored &&
+        (stored === "en" || stored === "ar") &&
+        stored !== lang
+      ) {
+        setLang(stored);
+      }
+    } catch {
+      /* ignore */
+    }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
@@ -27,9 +42,17 @@ export default function LanguageToggle() {
       aria-label={t("navbar.lang")}
       aria-pressed={lang === "ar"}
     >
-      <Languages className={`h-4 w-4 transition-transform ${lang === "ar" ? "rotate-180" : ""}`} />
+      <Languages
+        className={`h-4 w-4 transition-transform ${
+          lang === "ar" ? "rotate-180" : ""
+        }`}
+      />
       <span className="tabular-nums">{t("navbar.lang")}</span>
-      <span className="ml-1 px-1.5 py-0.5 rounded bg-white/10 text-white/70 text-[10px] leading-none">{lang.toUpperCase()}</span>
+      <span className="ml-1 px-1.5 py-0.5 rounded bg-white/10 text-white/70 text-[10px] leading-none">
+        {lang.toUpperCase()}
+      </span>
     </button>
   );
 }
+
+
