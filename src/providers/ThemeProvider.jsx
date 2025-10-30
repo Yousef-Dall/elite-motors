@@ -18,8 +18,18 @@ export function ThemeProvider({ children }) {
 
   useEffect(() => {
     const html = document.documentElement;
+<<<<<<< HEAD:src/providers/ThemeProvider.jsx
     if (theme === "dark") { html.setAttribute("data-theme", "dark"); html.classList.add("dark"); }
     else { html.removeAttribute("data-theme"); html.classList.remove("dark"); }
+=======
+    if (theme === "dark") {
+      html.setAttribute("data-theme", "dark");
+      html.classList.add("dark");
+    } else {
+      html.removeAttribute("data-theme");
+      html.classList.remove("dark");
+    }
+>>>>>>> 2e809e278af7df7a7284c2c847d0d0c2b2c9870c:src/theme/ThemeProvider.jsx
     try { localStorage.setItem("elite_theme", theme); } catch {}
   }, [theme]);
 

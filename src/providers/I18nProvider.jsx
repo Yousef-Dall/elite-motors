@@ -8,11 +8,16 @@ function getInitialLang() {
     const stored = localStorage.getItem("elite_lang");
     if (stored === "en" || stored === "ar") return stored;
   } catch {}
+<<<<<<< HEAD:src/providers/I18nProvider.jsx
   if (typeof navigator !== "undefined") {
     const nav = navigator.language || "en";
     return nav.toLowerCase().startsWith("ar") ? "ar" : "en";
   }
   return "en";
+=======
+  const nav = (typeof navigator !== "undefined" && navigator.language) || "en";
+  return nav.toLowerCase().startsWith("ar") ? "ar" : "en";
+>>>>>>> 2e809e278af7df7a7284c2c847d0d0c2b2c9870c:src/i18n/I18nProvider.jsx
 }
 
 export function I18nProvider({ children }) {

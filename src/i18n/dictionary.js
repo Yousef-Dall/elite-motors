@@ -65,6 +65,10 @@ export const DICT = {
       title: "Gallery",
       prev: "Previous",
       next: "Next",
+<<<<<<< HEAD
+=======
+      items: {},
+>>>>>>> 2e809e278af7df7a7284c2c847d0d0c2b2c9870c
     },
     location: {
       tag: "Visit Us",
@@ -184,6 +188,10 @@ export const DICT = {
       title: "المعرض",
       prev: "السابق",
       next: "التالي",
+<<<<<<< HEAD
+=======
+      items: {},
+>>>>>>> 2e809e278af7df7a7284c2c847d0d0c2b2c9870c
     },
     location: {
       tag: "زورونا",
@@ -224,6 +232,7 @@ export const DICT = {
       err: "حدث خطأ. جرّب مرة أخرى أو راسلنا مباشرة.",
     },
     footer: { privacy: "الخصوصية", terms: "الشروط", contact: "تواصل" },
+<<<<<<< HEAD
     notfound: {
       title: "الصفحة غير موجودة",
       desc: "الصفحة التي تبحث عنها غير موجودة أو قد تم نقلها.",
@@ -238,5 +247,7 @@ export const DICT = {
       back: "← الرجوع إلى المقالات",
       notFoundTitle: "المقال غير موجود",
     },
+=======
+>>>>>>> 2e809e278af7df7a7284c2c847d0d0c2b2c9870c
   },
 };

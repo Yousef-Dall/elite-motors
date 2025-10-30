@@ -1,13 +1,34 @@
 import { useEffect, useMemo, useRef, useState } from "react";
 
+<<<<<<< HEAD
+=======
+/**
+ * useScrollSpyAuto
+ * - Tracks which section is active based on a "reading line"
+ * - Won't switch until you're sufficiently *inside* the next section
+ *
+ * Options:
+ *  - headerRef / headerSelector: sticky header element to auto-measure
+ *  - lineRatio: vertical position of the reading line (0..1), default 0.35
+ *  - switchOffsetPx: require at least this many px into the next section
+ *  - switchFraction: require this fraction of the section height (0..1)
+ *  - hysteresisPx: small stickiness so current section keeps control until you pass further
+ */
+>>>>>>> 2e809e278af7df7a7284c2c847d0d0c2b2c9870c
 export default function useScrollSpyAuto(ids, options = {}) {
   const {
     headerRef,
     headerSelector,
     lineRatio = 0.35,
+<<<<<<< HEAD
     switchOffsetPx = 0,
     switchFraction = 0,
     hysteresisPx = 60,
+=======
+    switchOffsetPx = 0, // e.g. 200
+    switchFraction = 0, // e.g. 0.25  (25% of section height)
+    hysteresisPx = 60, // keeps current a bit longer
+>>>>>>> 2e809e278af7df7a7284c2c847d0d0c2b2c9870c
   } = options;
 
   const [active, setActive] = useState(ids[0] || "");
@@ -21,6 +42,10 @@ export default function useScrollSpyAuto(ids, options = {}) {
     return null;
   }, [headerRef, headerSelector]);
 
+<<<<<<< HEAD
+=======
+  // Keep offsetPx synced with header height
+>>>>>>> 2e809e278af7df7a7284c2c847d0d0c2b2c9870c
   useEffect(() => {
     if (!headerEl) return;
     const compute = () => {
@@ -53,6 +78,7 @@ export default function useScrollSpyAuto(ids, options = {}) {
 
     const update = () => {
       const lineY = readingLineY();
+<<<<<<< HEAD
       const candidates = [];
       for (const { id, el } of sections) {
         const rectTop = el.offsetTop;
@@ -65,6 +91,43 @@ export default function useScrollSpyAuto(ids, options = {}) {
       if (!candidates.length) {
         if (!active) setActive(sections[0].id);
         return;
+=======
+
+      // Only consider sections whose "switch threshold" is above the reading line.
+      // Threshold = sectionTop + max(px, fraction*height)
+      const candidates = [];
+      for (const { id, el } of sections) {
+        const rectTop = el.offsetTop; // absolute Y of section top
+        const h = el.offsetHeight || 0;
+        const neededIn = Math.max(switchOffsetPx, h * switchFraction);
+        const thresholdTop = rectTop + neededIn;
+
+        if (thresholdTop <= lineY) {
+          candidates.push({
+            id,
+            distance: Math.abs(thresholdTop - lineY),
+          });
+        }
+      }
+
+      if (!candidates.length) {
+        // If we haven't crossed any threshold yet, keep current (or first)
+        if (!active) setActive(sections[0].id);
+        return;
+      }
+
+      // Prefer the nearest threshold we've *passed*, but add hysteresis so the current
+      // section sticks a little longer if it's still close.
+      let best = candidates[0];
+      for (let i = 1; i < candidates.length; i++) {
+        const c = candidates[i];
+        const curBoost = c.id === active ? Math.max(0, hysteresisPx) : 0;
+        const bestBoost = best.id === active ? Math.max(0, hysteresisPx) : 0;
+
+        const cScore = c.distance - curBoost;
+        const bScore = best.distance - bestBoost;
+        if (cScore < bScore) best = c;
+>>>>>>> 2e809e278af7df7a7284c2c847d0d0c2b2c9870c
       }
 
       let best = candidates[0];
