@@ -1,6 +1,30 @@
 import nodemailer from "nodemailer";
 
-/** Basic payload validation */
+// tiny, stateless rate-limit by IP bucket in memory per lambda life
+const BUCKET = new Map();
+const WINDOW_MS = 60_000;
+const LIMIT = 8;
+
+function rateLimit(req) {
+  try {
+    const ip =
+      req.headers["x-forwarded-for"]?.toString().split(",")[0].trim() ||
+      req.socket?.remoteAddress ||
+      "unknown";
+    const now = Date.now();
+    const ent = BUCKET.get(ip) || { hits: 0, reset: now + WINDOW_MS };
+    if (now > ent.reset) {
+      ent.hits = 0;
+      ent.reset = now + WINDOW_MS;
+    }
+    ent.hits++;
+    BUCKET.set(ip, ent);
+    return ent.hits <= LIMIT;
+  } catch {
+    return true;
+  }
+}
+
 function validate(body) {
   const errors = [];
   const name = (body?.name ?? "").toString().trim();
@@ -9,10 +33,10 @@ function validate(body) {
   const message = (body?.message ?? "").toString().trim();
   const hp = (body?.hp ?? "").toString().trim();
 
-  if (!name) errors.push("name");
+  if (!name || name.length < 2) errors.push("name");
   if (!/^\S+@\S+\.\S+$/.test(email)) errors.push("email");
-  if (!message) errors.push("message");
-  if (hp) errors.push("spam"); // honeypot caught
+  if (!message || message.length < 5) errors.push("message");
+  if (hp) errors.push("spam");
 
   return { valid: errors.length === 0, errors, name, email, vehicle, message };
 }
@@ -21,6 +45,10 @@ export default async function handler(req, res) {
   if (req.method !== "POST") {
     res.setHeader("Allow", "POST");
     return res.status(405).json({ ok: false, error: "Method Not Allowed" });
+  }
+
+  if (!rateLimit(req)) {
+    return res.status(429).json({ ok: false, error: "Too Many Requests" });
   }
 
   try {
@@ -39,30 +67,31 @@ export default async function handler(req, res) {
       }));
 
     const { valid, errors, name, email, vehicle, message } = validate(body);
-    if (!valid)
+    if (!valid) {
       return res
         .status(400)
         .json({ ok: false, error: "Invalid fields", fields: errors });
+    }
 
-    // ENV
     const TO = process.env.TO_EMAIL || "elitemotors.om@gmail.com";
-    const FROM = process.env.FROM_EMAIL || process.env.GMAIL_USER; // what Gmail will send as
+    const FROM =
+      process.env.FROM_EMAIL ||
+      process.env.GMAIL_USER ||
+      "no-reply@elitemotors.om";
     const SITE = process.env.SITE_NAME || "Elite Motors";
 
-    // Gmail SMTP via app password (2FA required on the account)
     const transporter = nodemailer.createTransport({
-      host: "smtp.gmail.com",
-      port: 465,
-      secure: true,
+      host: process.env.SMTP_HOST || "smtp.gmail.com",
+      port: Number(process.env.SMTP_PORT || 465),
+      secure: String(process.env.SMTP_SECURE || "true") === "true",
       auth: {
-        user: process.env.GMAIL_USER, // your Gmail address
-        pass: process.env.GMAIL_APP_PASSWORD, // 16-char app password
+        user: process.env.SMTP_USER || process.env.GMAIL_USER,
+        pass: process.env.SMTP_PASS || process.env.GMAIL_APP_PASSWORD,
       },
     });
 
     const subject = `New inquiry · ${name}${vehicle ? ` · ${vehicle}` : ""}`;
 
-    // Owner email
     await transporter.sendMail({
       from: FROM,
       to: TO,
@@ -78,15 +107,13 @@ export default async function handler(req, res) {
       ].join("\n"),
     });
 
-    // Optional: polite auto-reply to the sender
-    if (email) {
-      await transporter.sendMail({
-        from: FROM,
-        to: email,
-        subject: `We received your message — ${SITE}`,
-        text: `Hi ${name},
+    await transporter.sendMail({
+      from: FROM,
+      to: email,
+      subject: `We received your message — ${SITE}`,
+      text: `Hi ${name},
 
-Thanks for reaching out to ${SITE}. We’ve received your message and will reply within 24 hours.
+Thanks for reaching out to ${SITE}. We’ve received your message and will reply soon.
 
 Summary:
 - Name: ${name}
@@ -97,10 +124,8 @@ Your message:
 ${message}
 
 Best,
-${SITE}
-`,
-      });
-    }
+${SITE}`,
+    });
 
     return res.status(200).json({ ok: true });
   } catch (err) {
@@ -109,8 +134,4 @@ ${SITE}
   }
 }
 
-export const config = {
-  api: {
-    bodyParser: false, // we parse manually to keep it universal-compatible
-  },
-};
+export const config = { api: { bodyParser: false } };

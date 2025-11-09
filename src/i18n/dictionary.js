@@ -41,7 +41,21 @@ export const DICT = {
       csat: "Customer Satisfaction",
       csatNote: "Based on verified reviews",
     },
-    services: { title: "Our Services" },
+    services: {
+      title: "Our Services",
+      items: {
+        "nitrogen-filling": {
+          title: "Nitrogen Filling (Tyres)",
+          summary:
+            "High-purity nitrogen for more stable pressures and cooler running.",
+        },
+        "rust-removal-fabrication": {
+          title: "Rust Removal & Fabrication",
+          summary:
+            "Corrosion cut-out, treatment, custom metal fabrication, structural repairs.",
+        },
+      },
+    },
     vm: {
       visionT: "Vision",
       visionP:
@@ -58,6 +72,7 @@ export const DICT = {
         "Partnerships with global motorsport suppliers",
         "Secure storage with climate & trickle-charge",
       ],
+      imgAlt: "Elite Motors workshop interior",
     },
     gallery: {
       tag: "Inside the Workshop",
@@ -100,6 +115,9 @@ export const DICT = {
       placeholderVehicle: "e.g., Ferrari 296 GTB",
       placeholderHelp: "Maintenance, tuning, detailing…",
       send: "Send Request",
+      sending: "Sending…",
+      ok: "Thanks — we’ll get back to you within 24 hours.",
+      err: "Something went wrong. Please try again or email us directly.",
     },
     footer: { privacy: "Privacy", terms: "Terms", contact: "Contact" },
     notfound: {
@@ -112,10 +130,7 @@ export const DICT = {
       sub: "Build stories, ownership tips, and workshop updates.",
       readMore: "Read more",
     },
-    article: {
-      back: "← Back to Articles",
-      notFoundTitle: "Article not found",
-    },
+    article: { back: "← Back to Articles", notFoundTitle: "Article not found" },
   },
 
   ar: {
@@ -160,7 +175,20 @@ export const DICT = {
       csat: "رضا العملاء",
       csatNote: "بناءً على تقييمات موثوقة",
     },
-    services: { title: "خدماتنا" },
+    services: {
+      title: "خدماتنا",
+      items: {
+        "nitrogen-filling": {
+          title: "تعبئة نيتروجين للإطارات",
+          summary: "نيتروجين نقي لثبات الضغط وتبريد أفضل أثناء القيادة.",
+        },
+        "rust-removal-fabrication": {
+          title: "إزالة الصدأ والتصنيع المعدني",
+          summary:
+            "قصّ مناطق التآكل ومعالجتها مع تصنيع معدني مخصص وإصلاحات هيكلية.",
+        },
+      },
+    },
     vm: {
       visionT: "الرؤية",
       visionP:
@@ -177,6 +205,7 @@ export const DICT = {
         "شراكات مع موردي رياضة السيارات",
         "تخزين آمن مع تحكم بالمناخ وشحن حافظ",
       ],
+      imgAlt: "داخل ورشة إيليت موتورز",
     },
     gallery: {
       tag: "داخل الورشة",
@@ -218,6 +247,9 @@ export const DICT = {
       placeholderVehicle: "مثال: Ferrari 296 GTB",
       placeholderHelp: "صيانة، ضبط أداء، تلميع…",
       send: "إرسال الطلب",
+      sending: "جارٍ الإرسال…",
+      ok: "شكرًا — سنعود إليك خلال 24 ساعة.",
+      err: "حدث خطأ. حاول مرة أخرى أو راسلنا عبر البريد.",
     },
     footer: { privacy: "الخصوصية", terms: "الشروط", contact: "تواصل" },
     notfound: {

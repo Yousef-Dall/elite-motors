@@ -1,32 +1,22 @@
 import { useEffect, useMemo, useRef, useState } from "react";
 
 /**
- * useScrollSpyAuto
- * Tracks which section is active based on a dynamic "reading line"
- * and only switches when you’re sufficiently *inside* the next section.
- *
- * Options:
- *  - headerRef / headerSelector: sticky header element for offset compensation
- *  - lineRatio: vertical ratio of the reading line (0..1, default 0.35)
- *  - switchOffsetPx: minimum px into the next section before switching
- *  - switchFraction: minimum fraction of section height before switching
- *  - hysteresisPx: stickiness (in px) so current section keeps active a bit longer
+ * Tracks which section is active using a reading line.
  */
 export default function useScrollSpyAuto(ids, options = {}) {
   const {
     headerRef,
     headerSelector,
-    lineRatio = 0.35,
-    switchOffsetPx = 0,
-    switchFraction = 0,
-    hysteresisPx = 60,
+    lineRatio = 0.6,
+    switchOffsetPx = 220,
+    switchFraction = 0.28,
+    hysteresisPx = 120,
   } = options;
 
   const [active, setActive] = useState(ids[0] || "");
   const [offsetPx, setOffsetPx] = useState(96);
   const rafLock = useRef(false);
 
-  // Resolve header element (either by ref or selector)
   const headerEl = useMemo(() => {
     if (headerRef?.current) return headerRef.current;
     if (headerSelector && typeof document !== "undefined")
@@ -34,7 +24,6 @@ export default function useScrollSpyAuto(ids, options = {}) {
     return null;
   }, [headerRef, headerSelector]);
 
-  // Keep offsetPx synced with header height
   useEffect(() => {
     if (!headerEl) return;
     const compute = () => {
@@ -50,7 +39,7 @@ export default function useScrollSpyAuto(ids, options = {}) {
       ro.disconnect();
       window.removeEventListener("resize", onResize);
     };
-  }, [headerEl]); // eslint-disable-line react-hooks/exhaustive-deps
+  }, [headerEl]); // eslint-disable-line
 
   useEffect(() => {
     if (!ids?.length) return;
@@ -76,8 +65,6 @@ export default function useScrollSpyAuto(ids, options = {}) {
         const h = el.offsetHeight || 0;
         const neededIn = Math.max(switchOffsetPx, h * switchFraction);
         const thresholdTop = rectTop + neededIn;
-
-        // Only consider sections whose threshold is above the reading line
         if (thresholdTop <= lineY) {
           candidates.push({ id, distance: Math.abs(thresholdTop - lineY) });
         }
@@ -88,7 +75,6 @@ export default function useScrollSpyAuto(ids, options = {}) {
         return;
       }
 
-      // Pick the nearest section we've crossed, with hysteresis preference
       let best = candidates[0];
       for (let i = 1; i < candidates.length; i++) {
         const c = candidates[i];
@@ -96,7 +82,6 @@ export default function useScrollSpyAuto(ids, options = {}) {
         const bBoost = best.id === active ? hysteresisPx : 0;
         if (c.distance - cBoost < best.distance - bBoost) best = c;
       }
-
       if (best.id && best.id !== active) setActive(best.id);
     };
 
@@ -112,7 +97,6 @@ export default function useScrollSpyAuto(ids, options = {}) {
     update();
     window.addEventListener("scroll", onScroll, { passive: true });
     window.addEventListener("resize", onScroll);
-
     return () => {
       window.removeEventListener("scroll", onScroll);
       window.removeEventListener("resize", onScroll);

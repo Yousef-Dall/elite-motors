@@ -22,10 +22,8 @@ function scrollToHash(hash) {
 
 export default function useHashScroll() {
   const { hash } = useLocation();
-
   useEffect(() => {
     if (hash) {
-      // delay a tick to ensure route content rendered
       const t = setTimeout(() => scrollToHash(hash), 0);
       return () => clearTimeout(t);
     }

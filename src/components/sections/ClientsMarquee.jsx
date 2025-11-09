@@ -6,10 +6,10 @@ const BRANDS = [
   { name: "McLaren", file: "mclaren.png" },
   { name: "Porsche", file: "porsche.png" },
   { name: "Aston Martin", file: "aston-martin.png" },
-  { name: "Lamborghini", file: "lamborgini.png" },
+  { name: "Lamborghini", file: "lamborghini.png" }, // fixed
   { name: "Bugatti", file: "bugatti.png" },
   { name: "Koenigsegg", file: "koenigsegg.png" },
-  { name: "Pagani", file: "pagani.png" },
+  { name: "Pagani", file: "pagani.png" }
 ];
 
 function BrandImg({ name, file }) {
@@ -52,17 +52,9 @@ export default function ClientsMarquee() {
         <div className="absolute inset-y-0 left-0 w-8 bg-gradient-to-r from-white dark:from-neutral-950 to-transparent pointer-events-none" />
         <div className="absolute inset-y-0 right-0 w-8 bg-gradient-to-l from-white dark:from-neutral-950 to-transparent pointer-events-none" />
 
-        <div
-          role="list"
-          aria-label={t("marquee.tag")}
-          className="scrollbar-hide flex items-center gap-8 overflow-x-auto snap-x snap-mandatory px-1"
-        >
+        <div role="list" aria-label={t("marquee.tag")} className="scrollbar-hide flex items-center gap-8 overflow-x-auto snap-x snap-mandatory px-1">
           {rowSm.map(({ name, file }, i) => (
-            <div
-              role="listitem"
-              key={`${name}-${i}`}
-              className="snap-center shrink-0 select-none"
-            >
+            <div role="listitem" key={`${name}-${i}`} className="snap-center shrink-0 select-none">
               <BrandImg name={name} file={file} />
             </div>
           ))}
@@ -70,14 +62,11 @@ export default function ClientsMarquee() {
       </div>
 
       {/* Desktop: infinite marquee */}
-      <div className="relative hidden md:block em-marquee">
+      <div className="relative hidden md:block em-marquee" aria-hidden="true">
         <div className="absolute inset-y-0 left-0 w-20 bg-gradient-to-r from-white dark:from-neutral-950 to-transparent pointer-events-none" />
         <div className="absolute inset-y-0 right-0 w-20 bg-gradient-to-l from-white dark:from-neutral-950 to-transparent pointer-events-none" />
 
-        <div
-          className="em-row flex items-center gap-12 animate-[marquee_28s_linear_infinite] will-change-transform"
-          aria-label={t("marquee.tag")}
-        >
+        <div className="em-row flex items-center gap-12 animate-[marquee_28s_linear_infinite] will-change-transform">
           {rowMd.map(({ name, file }, i) => (
             <div key={`${name}-${i}`} className="shrink-0 select-none">
               <BrandImg name={name} file={file} />
@@ -98,5 +87,3 @@ export default function ClientsMarquee() {
     </div>
   );
 }
-
-

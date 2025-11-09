@@ -1,10 +1,13 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width,initial-scale=1" />
     <title>Page not found — Elite Motors</title>
     <style>
+      :root {
+        color-scheme: dark;
+      }
       body {
         font-family: ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto,
           "Helvetica Neue", Arial;
@@ -24,11 +27,12 @@
       }
       a {
         color: #67e8f9;
+        text-decoration: underline;
       }
     </style>
   </head>
   <body>
-    <div class="card">
+    <div class="card" role="alert">
       <h1>404</h1>
       <p>That page doesn’t exist.</p>
       <p><a href="/">Go home</a></p>
