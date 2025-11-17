@@ -1,5 +1,5 @@
-import { defineConfig } from 'vite';
-import tailwind from '@tailwindcss/postcss';
+import { defineConfig } from "vite";
+import tailwind from "@tailwindcss/postcss";
 
 export default defineConfig({
   css: {

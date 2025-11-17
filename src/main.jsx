@@ -1,6 +1,10 @@
 import React from "react";
 import { createRoot } from "react-dom/client";
-import { createBrowserRouter, RouterProvider, Navigate } from "react-router-dom";
+import {
+  createBrowserRouter,
+  RouterProvider,
+  Navigate,
+} from "react-router-dom";
 import "./index.css";
 
 import { I18nProvider } from "./providers/I18nProvider.jsx";
@@ -18,15 +22,21 @@ import TermsPage from "./pages/TermsPage.jsx";
 import NotFoundPage from "./pages/NotFoundPage.jsx";
 
 const router = createBrowserRouter([
-  { path: "/", element: <App><LandingPage /></App> },
-  { path: "/parts", element: <App><PartsPage /></App> },
-  { path: "/pricing", element: <Navigate to="/parts" replace /> },
-  { path: "/booking", element: <App><BookingPage /></App> },
-  { path: "/blog", element: <App><BlogPage /></App> },
-  { path: "/blog/:slug", element: <App><ArticlePage /></App> },
-  { path: "/privacy", element: <App><PrivacyPage /></App> },
-  { path: "/terms", element: <App><TermsPage /></App> },
-  { path: "*", element: <App><NotFoundPage /></App> }
+  {
+    path: "/",
+    element: <App />,
+    children: [
+      { index: true, element: <LandingPage /> },
+      { path: "parts", element: <PartsPage /> },
+      { path: "pricing", element: <Navigate to="/parts" replace /> },
+      { path: "booking", element: <BookingPage /> },
+      { path: "blog", element: <BlogPage /> },
+      { path: "blog/:slug", element: <ArticlePage /> },
+      { path: "privacy", element: <PrivacyPage /> },
+      { path: "terms", element: <TermsPage /> },
+      { path: "*", element: <NotFoundPage /> },
+    ],
+  },
 ]);
 
 createRoot(document.getElementById("root")).render(
@@ -34,7 +44,10 @@ createRoot(document.getElementById("root")).render(
     <SEOProvider>
       <I18nProvider>
         <ThemeProvider>
-          <RouterProvider router={router} future={{ v7_startTransition: true }} />
+          <RouterProvider
+            router={router}
+            future={{ v7_startTransition: true }}
+          />
         </ThemeProvider>
       </I18nProvider>
     </SEOProvider>

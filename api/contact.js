@@ -1,26 +1,35 @@
 import nodemailer from "nodemailer";
 
-// tiny, stateless rate-limit by IP bucket in memory per lambda life
+// Tiny in-memory rate limiter per IP, per lambda instance.
 const BUCKET = new Map();
 const WINDOW_MS = 60_000;
 const LIMIT = 8;
 
+function getClientIp(req) {
+  return (
+    req.headers["x-forwarded-for"]?.toString().split(",")[0].trim() ||
+    req.socket?.remoteAddress ||
+    "unknown"
+  );
+}
+
 function rateLimit(req) {
   try {
-    const ip =
-      req.headers["x-forwarded-for"]?.toString().split(",")[0].trim() ||
-      req.socket?.remoteAddress ||
-      "unknown";
+    const ip = getClientIp(req);
     const now = Date.now();
-    const ent = BUCKET.get(ip) || { hits: 0, reset: now + WINDOW_MS };
-    if (now > ent.reset) {
-      ent.hits = 0;
-      ent.reset = now + WINDOW_MS;
+    const entry = BUCKET.get(ip) || { hits: 0, reset: now + WINDOW_MS };
+
+    if (now > entry.reset) {
+      entry.hits = 0;
+      entry.reset = now + WINDOW_MS;
     }
-    ent.hits++;
-    BUCKET.set(ip, ent);
-    return ent.hits <= LIMIT;
+
+    entry.hits += 1;
+    BUCKET.set(ip, entry);
+
+    return entry.hits <= LIMIT;
   } catch {
+    // Fail-open for rate limit, don't DOS legit users because of a bug.
     return true;
   }
 }
@@ -31,7 +40,7 @@ function validate(body) {
   const email = (body?.email ?? "").toString().trim();
   const vehicle = (body?.vehicle ?? "").toString().trim();
   const message = (body?.message ?? "").toString().trim();
-  const hp = (body?.hp ?? "").toString().trim();
+  const hp = (body?.hp ?? "").toString().trim(); // honeypot
 
   if (!name || name.length < 2) errors.push("name");
   if (!/^\S+@\S+\.\S+$/.test(email)) errors.push("email");
@@ -39,6 +48,29 @@ function validate(body) {
   if (hp) errors.push("spam");
 
   return { valid: errors.length === 0, errors, name, email, vehicle, message };
+}
+
+async function parseBody(req) {
+  if (req.body) return req.body;
+
+  return new Promise((resolve, reject) => {
+    let data = "";
+    req.on("data", (chunk) => {
+      data += chunk;
+      // crude protection against nonsense payloads
+      if (data.length > 64 * 1024) {
+        reject(new Error("Body too large"));
+      }
+    });
+    req.on("end", () => {
+      try {
+        resolve(JSON.parse(data || "{}"));
+      } catch (err) {
+        reject(err);
+      }
+    });
+    req.on("error", reject);
+  });
 }
 
 export default async function handler(req, res) {
@@ -52,21 +84,9 @@ export default async function handler(req, res) {
   }
 
   try {
-    const body =
-      req.body ||
-      (await new Promise((resolve, reject) => {
-        let data = "";
-        req.on("data", (c) => (data += c));
-        req.on("end", () => {
-          try {
-            resolve(JSON.parse(data || "{}"));
-          } catch (e) {
-            reject(e);
-          }
-        });
-      }));
-
+    const body = await parseBody(req);
     const { valid, errors, name, email, vehicle, message } = validate(body);
+
     if (!valid) {
       return res
         .status(400)
@@ -76,30 +96,41 @@ export default async function handler(req, res) {
     const TO = process.env.TO_EMAIL || "elitemotors.om@gmail.com";
     const FROM =
       process.env.FROM_EMAIL ||
-      process.env.GMAIL_USER ||
+      process.env.SMTP_USER ||
       "no-reply@elitemotors.om";
     const SITE = process.env.SITE_NAME || "Elite Motors";
+
+    const smtpUser = process.env.SMTP_USER || process.env.GMAIL_USER;
+    const smtpPass = process.env.SMTP_PASS || process.env.GMAIL_APP_PASSWORD;
+
+    if (!smtpUser || !smtpPass) {
+      console.error("contact handler: SMTP credentials missing");
+      return res
+        .status(500)
+        .json({ ok: false, error: "Email service not configured" });
+    }
 
     const transporter = nodemailer.createTransport({
       host: process.env.SMTP_HOST || "smtp.gmail.com",
       port: Number(process.env.SMTP_PORT || 465),
       secure: String(process.env.SMTP_SECURE || "true") === "true",
       auth: {
-        user: process.env.SMTP_USER || process.env.GMAIL_USER,
-        pass: process.env.SMTP_PASS || process.env.GMAIL_APP_PASSWORD,
+        user: smtpUser,
+        pass: smtpPass,
       },
     });
 
     const subject = `New inquiry · ${name}${vehicle ? ` · ${vehicle}` : ""}`;
 
+    // Owner email
     await transporter.sendMail({
-      from: FROM,
+      from: `"${SITE} Contact" <${FROM}>`,
       to: TO,
       subject,
       replyTo: email,
       text: [
         `From: ${name} <${email}>`,
-        vehicle ? `Vehicle: ${vehicle}` : `Vehicle: —`,
+        vehicle ? `Vehicle: ${vehicle}` : "Vehicle: —",
         "",
         message,
         "",
@@ -107,8 +138,9 @@ export default async function handler(req, res) {
       ].join("\n"),
     });
 
+    // Auto-reply
     await transporter.sendMail({
-      from: FROM,
+      from: `"${SITE}" <${FROM}>`,
       to: email,
       subject: `We received your message — ${SITE}`,
       text: `Hi ${name},
@@ -123,7 +155,7 @@ Summary:
 Your message:
 ${message}
 
-Best,
+Best regards,
 ${SITE}`,
     });
 

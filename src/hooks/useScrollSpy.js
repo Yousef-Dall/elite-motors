@@ -1,115 +1,68 @@
+// src/hooks/useScrollSpy.js
+// Scroll spy hook: tracks which section is currently in view.
+//
+// Usage:
+// const activeId = useScrollSpyAuto({
+//   ids: ["home", "about", "services"],
+//   offset: 140,           // header height-ish
+//   enabled: isLanding,    // false on other routes
+// });
+
 import { useEffect, useMemo, useRef, useState } from "react";
 
-/**
- * Tracks which section is active using a reading line.
- */
-export default function useScrollSpyAuto(ids, options = {}) {
-  const {
-    headerRef,
-    headerSelector,
-    lineRatio = 0.6,
-    switchOffsetPx = 220,
-    switchFraction = 0.28,
-    hysteresisPx = 120,
-  } = options;
+export function useScrollSpyAuto({
+  ids = [],
+  offset = 0,
+  enabled = true,
+} = {}) {
+  const [activeId, setActiveId] = useState(null);
+  const observerRef = useRef(null);
 
-  const [active, setActive] = useState(ids[0] || "");
-  const [offsetPx, setOffsetPx] = useState(96);
-  const rafLock = useRef(false);
-
-  const headerEl = useMemo(() => {
-    if (headerRef?.current) return headerRef.current;
-    if (headerSelector && typeof document !== "undefined")
-      return document.querySelector(headerSelector);
-    return null;
-  }, [headerRef, headerSelector]);
+  const idsKey = useMemo(
+    () => (Array.isArray(ids) && ids.length ? ids.join("|") : ""),
+    [ids],
+  );
 
   useEffect(() => {
-    if (!headerEl) return;
-    const compute = () => {
-      const h = Math.ceil(headerEl.getBoundingClientRect()?.height || 0);
-      if (h && h !== offsetPx) setOffsetPx(h);
-    };
-    compute();
-    const ro = new ResizeObserver(compute);
-    ro.observe(headerEl);
-    const onResize = () => compute();
-    window.addEventListener("resize", onResize);
-    return () => {
-      ro.disconnect();
-      window.removeEventListener("resize", onResize);
-    };
-  }, [headerEl]); // eslint-disable-line
+    if (!enabled) return;
 
-  useEffect(() => {
-    if (!ids?.length) return;
+    const elements = (
+      idsKey
+        ? ids.map((id) => document.getElementById(id)).filter(Boolean)
+        : Array.from(document.querySelectorAll("[data-spy]"))
+    ).filter((el) => el instanceof HTMLElement);
 
-    const sections = ids
-      .map((id) => {
-        const el = document.getElementById(id);
-        return el ? { id, el } : null;
-      })
-      .filter(Boolean);
+    if (!elements.length) return;
 
-    if (!sections.length) return;
+    const observer = new IntersectionObserver(
+      (entries) => {
+        const visible = entries
+          .filter((e) => e.isIntersecting)
+          .sort(
+            (a, b) =>
+              a.target.getBoundingClientRect().top -
+              b.target.getBoundingClientRect().top,
+          );
 
-    const readingLineY = () =>
-      window.scrollY + offsetPx + window.innerHeight * lineRatio;
-
-    const update = () => {
-      const lineY = readingLineY();
-      const candidates = [];
-
-      for (const { id, el } of sections) {
-        const rectTop = el.offsetTop;
-        const h = el.offsetHeight || 0;
-        const neededIn = Math.max(switchOffsetPx, h * switchFraction);
-        const thresholdTop = rectTop + neededIn;
-        if (thresholdTop <= lineY) {
-          candidates.push({ id, distance: Math.abs(thresholdTop - lineY) });
+        if (visible[0]) {
+          const el = /** @type {HTMLElement} */ (visible[0].target);
+          setActiveId(el.id || null);
         }
-      }
+      },
+      {
+        // offset emulates a header pushing the viewport line down
+        rootMargin: `${-offset}px 0px -70% 0px`,
+        threshold: [0, 1],
+      },
+    );
 
-      if (!candidates.length) {
-        if (!active) setActive(sections[0].id);
-        return;
-      }
+    elements.forEach((el) => observer.observe(el));
+    observerRef.current = observer;
 
-      let best = candidates[0];
-      for (let i = 1; i < candidates.length; i++) {
-        const c = candidates[i];
-        const cBoost = c.id === active ? hysteresisPx : 0;
-        const bBoost = best.id === active ? hysteresisPx : 0;
-        if (c.distance - cBoost < best.distance - bBoost) best = c;
-      }
-      if (best.id && best.id !== active) setActive(best.id);
-    };
+    return () => observer.disconnect();
+  }, [idsKey, offset, enabled, ids]);
 
-    const onScroll = () => {
-      if (rafLock.current) return;
-      rafLock.current = true;
-      requestAnimationFrame(() => {
-        update();
-        rafLock.current = false;
-      });
-    };
-
-    update();
-    window.addEventListener("scroll", onScroll, { passive: true });
-    window.addEventListener("resize", onScroll);
-    return () => {
-      window.removeEventListener("scroll", onScroll);
-      window.removeEventListener("resize", onScroll);
-    };
-  }, [
-    ids,
-    offsetPx,
-    lineRatio,
-    switchOffsetPx,
-    switchFraction,
-    hysteresisPx,
-    active,
-  ]);
-
-  return active;
+  return activeId;
 }
+
+export default useScrollSpyAuto;

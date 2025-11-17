@@ -1,17 +1,24 @@
-// Central site config. One source of truth.
+// src/config/site.js
+// Central site config. One source of truth for URLs, branding, and contact info.
+
+const DOMAIN = import.meta.env.VITE_SITE_URL || "https://elitemotors.om";
 
 export const SITE = {
-  name: "Elite Motors",
-  domain: "https://elitemotors.om",
-  email: "elitemotors.om@gmail.com",
+  name: import.meta.env.VITE_BUSINESS_NAME || "Elite Motors",
+  domain: DOMAIN.replace(/\/+$/, ""),
+  email: import.meta.env.VITE_PUBLIC_EMAIL || "elitemotors.om@gmail.com",
 
   phone: {
     display: "+968 0000 0000",
-    e164: "+96800000000", // for tel: links
-    whatsapp: "96800000000", // digits only for wa.me
+    e164: import.meta.env.VITE_PHONE_E164 || "+96800000000",
+    whatsapp: import.meta.env.VITE_WHATSAPP || "96800000000",
   },
 
-  coords: { lat: 23.478528, lng: 58.260806 },
+  coords: {
+    lat: Number(import.meta.env.VITE_MAP_LAT || 23.478528),
+    lng: Number(import.meta.env.VITE_MAP_LNG || 58.260806),
+  },
+
   addressShort: "Muscat, Oman",
 
   booking: {
@@ -19,4 +26,7 @@ export const SITE = {
   },
 
   ogImage: "/og.jpg",
+
+  description:
+    "Factory-grade maintenance, performance tuning, and concierge care for supercars and hypercars in Muscat, Oman.",
 };

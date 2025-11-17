@@ -11,94 +11,101 @@ import Location from "../components/sections/Location";
 import Testimonial from "../components/sections/Testimonial";
 import Contact from "../components/sections/Contact";
 import CTA from "../components/sections/CTA";
+import { SEO } from "../components/seo/SEO.jsx";
+import { SITE } from "../config/site";
+
 export default function LandingPage() {
   return (
     <>
-      {" "}
-      <MotionSection
-        as="section"
-        id="home"
-        className="scroll-offset py-0 md:py-0"
-      >
-        {" "}
-        <Hero />{" "}
-      </MotionSection>{" "}
+      <SEO
+        title={null}
+        description={SITE.description}
+        url={SITE.domain}
+      />
+
+      <MotionSection as="section" id="home" className="scroll-offset py-0">
+        <Hero />
+      </MotionSection>
+
       <MotionSection
         as="section"
         id="about"
         className="scroll-offset py-20 md:py-28 border-t border-black/10 dark:border-white/10 bg-black/5 dark:bg-neutral-950/80"
       >
-        {" "}
-        <About />{" "}
-      </MotionSection>{" "}
+        <About />
+      </MotionSection>
+
       <MotionSection
         as="section"
         id="services"
         className="scroll-offset py-20 md:py-28"
       >
-        {" "}
-        <Services />{" "}
-      </MotionSection>{" "}
+        <Services />
+      </MotionSection>
+
       <MotionSection
         as="section"
         id="marquee"
         className="scroll-offset py-14 md:py-20 border-y border-white/10 bg-white/60 dark:bg-white/5"
       >
-        {" "}
-        <ClientsMarquee />{" "}
-      </MotionSection>{" "}
+        <ClientsMarquee />
+      </MotionSection>
+
       <MotionSection
         as="section"
         id="vm"
         className="scroll-offset py-20 md:py-28 border-y border-black/10 dark:border-white/10 bg-black/5 dark:bg-neutral-950/70"
       >
-        {" "}
-        <VisionMission />{" "}
-      </MotionSection>{" "}
+        <VisionMission />
+      </MotionSection>
+
       <MotionSection
         as="section"
         id="who"
         className="scroll-offset py-20 md:py-28"
       >
-        {" "}
-        <WhoWeAre />{" "}
-      </MotionSection>{" "}
+        <WhoWeAre />
+      </MotionSection>
+
       <MotionSection
         as="section"
         id="gallery"
         className="scroll-offset py-16 md:py-24"
       >
-        {" "}
-        <Gallery />{" "}
-      </MotionSection>{" "}
+        <Gallery />
+      </MotionSection>
+
       <MotionSection
         as="section"
         id="location"
         className="scroll-offset py-20 md:py-28"
       >
-        {" "}
-        <Location />{" "}
-      </MotionSection>{" "}
+        <Location />
+      </MotionSection>
+
       <MotionSection
         as="section"
         id="testimonial"
         className="scroll-offset py-16 md:py-24"
       >
-        {" "}
-        <Testimonial />{" "}
-      </MotionSection>{" "}
+        <Testimonial />
+      </MotionSection>
+
       <MotionSection
         as="section"
         id="contact"
         className="scroll-offset py-20 md:py-28 border-t border-black/10 dark:border-white/10 bg-black/5 dark:bg-neutral-950/80"
       >
-        {" "}
-        <Contact />{" "}
-      </MotionSection>{" "}
-      <MotionSection as="section" id="cta" className="scroll-offset py-16">
-        {" "}
-        <CTA />{" "}
-      </MotionSection>{" "}
+        <Contact />
+      </MotionSection>
+
+      <MotionSection
+        as="section"
+        id="cta"
+        className="scroll-offset py-16"
+      >
+        <CTA />
+      </MotionSection>
     </>
   );
 }

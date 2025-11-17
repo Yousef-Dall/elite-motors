@@ -8,9 +8,12 @@ import {
   AlertTriangle,
 } from "lucide-react";
 import { useI18n } from "../../providers/I18nProvider.jsx";
+import { CONTACT } from "../../constants/contact";
+import { SITE } from "../../config/site";
 
-const TO = "elitemotors.om@gmail.com";
-const ENDPOINT = "/api/contact";
+const TO = CONTACT.EMAIL;
+const ENDPOINT =
+  import.meta.env.VITE_CONTACT_ENDPOINT || "/api/contact";
 
 export default function Contact() {
   const { t } = useI18n();
@@ -22,11 +25,13 @@ export default function Contact() {
     message: "",
     hp: "",
   });
-  const [status, setStatus] = useState({ state: "idle", note: "" }); // idle | sending | ok | err
+  const [status, setStatus] = useState({ state: "idle", note: "" });
 
   const disabled = useMemo(() => {
     const hasBasics =
-      form.name.trim() && /\S+@\S+\.\S+/.test(form.email) && form.message.trim();
+      form.name.trim() &&
+      /\S+@\S+\.\S+/.test(form.email) &&
+      form.message.trim();
     const notSpam = !form.hp;
     return !hasBasics || !notSpam || status.state === "sending";
   }, [form, status.state]);
@@ -34,6 +39,7 @@ export default function Contact() {
   async function handleSubmit(e) {
     e.preventDefault();
     if (disabled) return;
+
     setStatus({ state: "sending", note: "" });
 
     const payload = {
@@ -41,8 +47,6 @@ export default function Contact() {
       email: form.email.trim(),
       vehicle: form.vehicle.trim(),
       message: form.message.trim(),
-      to: TO,
-      site: "Elite Motors",
       ts: new Date().toISOString(),
     };
 
@@ -54,26 +58,35 @@ export default function Contact() {
           body: JSON.stringify(payload),
         });
         if (!res.ok) throw new Error(`HTTP ${res.status}`);
+
         setStatus({
           state: "ok",
           note:
             t("contact.ok") ||
             "Thanks — we’ll get back to you within 24 hours.",
         });
-        setForm({ name: "", email: "", vehicle: "", message: "", hp: "" });
+        setForm({
+          name: "",
+          email: "",
+          vehicle: "",
+          message: "",
+          hp: "",
+        });
       } else {
         const subject = encodeURIComponent(
-          `New inquiry from ${payload.name} (${payload.vehicle || "Vehicle N/A"})`
+          `New inquiry from ${payload.name} (${
+            payload.vehicle || "Vehicle N/A"
+          })`
         );
         const body = encodeURIComponent(
           [
             `Name: ${payload.name}`,
             `Email: ${payload.email}`,
             `Vehicle: ${payload.vehicle || "—"}`,
-            ``,
+            "",
             payload.message,
-            ``,
-            `— Sent from elitemotors.gcc contact form`,
+            "",
+            `— Sent from ${SITE.name} contact form`,
           ].join("\n")
         );
         window.location.href = `mailto:${TO}?subject=${subject}&body=${body}`;
@@ -84,7 +97,7 @@ export default function Contact() {
             "Thanks — your email client is opening now.",
         });
       }
-    } catch (err) {
+    } catch {
       setStatus({
         state: "err",
         note:
@@ -107,7 +120,8 @@ export default function Contact() {
         </p>
         <div className="space-y-3 text-neutral-700 dark:text-white/80">
           <div className="flex items-center gap-3">
-            <Phone className="h-5 w-5" /> <span>+968 0000 0000</span>
+            <Phone className="h-5 w-5" />
+            <span>{CONTACT.PHONE_DISPLAY}</span>
           </div>
           <div className="flex items-center gap-3">
             <Mail className="h-5 w-5" />
@@ -119,7 +133,8 @@ export default function Contact() {
             </a>
           </div>
           <div className="flex items-center gap-3">
-            <MapPin className="h-5 w-5" /> <span>Muscat, Oman</span>
+            <MapPin className="h-5 w-5" />
+            <span>{SITE.addressShort}</span>
           </div>
         </div>
       </div>
@@ -130,8 +145,9 @@ export default function Contact() {
         className="p-6 rounded-3xl border backdrop-blur-md space-y-4
                    bg-white/80 border-black/10
                    dark:bg-white/5 dark:border-white/10"
+        noValidate
       >
-        {/* Honeypot field */}
+        {/* Honeypot */}
         <input
           type="text"
           tabIndex={-1}
@@ -156,11 +172,14 @@ export default function Contact() {
               onChange={(e) =>
                 setForm((f) => ({ ...f, name: e.target.value }))
               }
-              placeholder={t("contact.placeholderName") || "Your name"}
+              placeholder={
+                t("contact.placeholderName") || "Your name"
+              }
               className="mt-1 w-full px-3 py-2 rounded-xl border outline-none
                          bg-white text-neutral-900 placeholder-neutral-500
                          dark:bg-neutral-900 dark:text-white dark:placeholder-white/50
                          border-black/10 dark:border-white/10 focus:border-cyan-400"
+              aria-invalid={status.state === "err" && !form.name}
             />
           </div>
           <div>
@@ -174,7 +193,9 @@ export default function Contact() {
               onChange={(e) =>
                 setForm((f) => ({ ...f, email: e.target.value }))
               }
-              placeholder={t("contact.placeholderEmail") || "you@example.com"}
+              placeholder={
+                t("contact.placeholderEmail") || "you@example.com"
+              }
               className="mt-1 w-full px-3 py-2 rounded-xl border outline-none
                          bg-white text-neutral-900 placeholder-neutral-500
                          dark:bg-neutral-900 dark:text-white dark:placeholder-white/50
@@ -226,7 +247,7 @@ export default function Contact() {
           />
         </div>
 
-        {/* Submit button */}
+        {/* Submit */}
         <button
           disabled={disabled}
           className={[
@@ -237,7 +258,7 @@ export default function Contact() {
         >
           {status.state === "sending" ? (
             <span className="inline-flex items-center gap-2">
-              <Loader2 className="h-4 w-4 animate-spin" />{" "}
+              <Loader2 className="h-4 w-4 animate-spin" />
               {t("contact.sending") || "Sending…"}
             </span>
           ) : (
@@ -245,15 +266,17 @@ export default function Contact() {
           )}
         </button>
 
-        {/* Feedback messages */}
+        {/* Feedback */}
         {status.state === "ok" && (
           <div className="mt-2 inline-flex items-center gap-2 text-emerald-600 dark:text-emerald-400">
-            <CheckCircle2 className="h-5 w-5" /> {status.note}
+            <CheckCircle2 className="h-5 w-5" />
+            {status.note}
           </div>
         )}
         {status.state === "err" && (
           <div className="mt-2 inline-flex items-center gap-2 text-rose-600 dark:text-rose-400">
-            <AlertTriangle className="h-5 w-5" /> {status.note}{" "}
+            <AlertTriangle className="h-5 w-5" />
+            {status.note}{" "}
             <a href={`mailto:${TO}`} className="underline">
               Email us
             </a>
@@ -261,7 +284,7 @@ export default function Contact() {
           </div>
         )}
 
-        {/* Hint text */}
+        {/* Hint */}
         {ENDPOINT ? (
           <div className="text-xs text-neutral-500 dark:text-white/40">
             Securely sent via server endpoint.
@@ -275,5 +298,3 @@ export default function Contact() {
     </div>
   );
 }
-
-
