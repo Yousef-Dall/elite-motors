@@ -7,14 +7,40 @@ const MotionSection = forwardRef(function MotionSection(
   ref
 ) {
   const prefersReduced = useReducedMotion();
+
   const variants = prefersReduced
-    ? { hidden: { opacity: 0 }, show: { opacity: 1, transition: { duration: 0.4, ease: "easeOut" } } }
-    : { hidden: { opacity: 0, y: 24 }, show: { opacity: 1, y: 0, transition: { duration: 0.55, ease: "easeOut" } } };
+    ? {
+        hidden: { opacity: 0 },
+        show: {
+          opacity: 1,
+          transition: { duration: 0.4, ease: "easeOut" },
+        },
+      }
+    : {
+        hidden: { opacity: 0, y: 24 },
+        show: {
+          opacity: 1,
+          y: 0,
+          transition: { duration: 0.55, ease: "easeOut" },
+        },
+      };
+
+  // Turn the chosen tag into a motion component
+  const MTag = motion(Tag);
 
   return (
-    <motion.div variants={variants} initial="hidden" whileInView="show" viewport={{ once: true, amount: 0.25 }}>
-      <Tag id={id} ref={ref} className={`scroll-offset ${className}`} {...rest}>{children}</Tag>
-    </motion.div>
+    <MTag
+      id={id}
+      ref={ref}
+      variants={variants}
+      initial="hidden"
+      whileInView="show"
+      viewport={{ once: true, amount: 0.25 }}
+      className={`scroll-offset ${className}`}
+      {...rest}
+    >
+      {children}
+    </MTag>
   );
 });
 
