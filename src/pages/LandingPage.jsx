@@ -37,19 +37,19 @@ export default function LandingPage() {
         <About />
       </MotionSection>
 
-      <MotionSection
-        as="section"
-        id="services"
-        className="scroll-offset py-20 md:py-28"
-      >
-        <Services />
-      </MotionSection>
+    <section
+  id="services"
+  className="scroll-offset py-20 md:py-28"
+>
+  <Services />
+</section>
+
 
       {/* Parts CTA – directly after services */}
       <MotionSection
         as="section"
         id="parts"
-        className="scroll-offset py-16 md:py-24 border-t border-black/10 dark:border-white/10 bg-white/60 dark:bg-neutral-900/60"
+        className="scroll-offset py-14 md:py-20 border-y border-white/10 bg-white/60 dark:bg-white/5"
       >
         <PartsCTA />
       </MotionSection>
