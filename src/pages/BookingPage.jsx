@@ -2,6 +2,8 @@ import React from "react";
 import { SITE } from "../config/site";
 import { SEO } from "../components/seo/SEO.jsx";
 import { useI18n } from "../providers/I18nProvider.jsx";
+import GoHomeButton from "../components/ui/GoHomeButton.jsx";
+
 
 export default function BookingPage() {
   const { lang } = useI18n();
@@ -70,6 +72,7 @@ export default function BookingPage() {
         </a>
         .
       </div>
+      <GoHomeButton />
     </div>
   );
 }

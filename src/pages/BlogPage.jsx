@@ -4,6 +4,8 @@ import { useI18n } from "../providers/I18nProvider.jsx";
 import { posts } from "../data/posts";
 import { SITE } from "../config/site";
 import { SEO } from "../components/seo/SEO.jsx";
+import GoHomeButton from "../components/ui/GoHomeButton.jsx";
+
 
 export default function BlogPage() {
   const { t, lang } = useI18n();
@@ -40,6 +42,7 @@ export default function BlogPage() {
           </article>
         ))}
       </div>
+      <GoHomeButton />
     </div>
   );
 }

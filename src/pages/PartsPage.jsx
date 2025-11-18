@@ -12,6 +12,8 @@ import {
 import { SEO } from "../components/seo/SEO.jsx";
 import { SITE } from "../config/site";
 import { useI18n } from "../providers/I18nProvider.jsx";
+import GoHomeButton from "../components/ui/GoHomeButton.jsx";
+
 
 const CATS = [
   "Consumables",
@@ -305,6 +307,7 @@ export default function PartsPage() {
           ))
         )}
       </div>
+      <GoHomeButton />
     </div>
   );
 }

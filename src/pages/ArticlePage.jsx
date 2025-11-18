@@ -4,6 +4,7 @@ import { useI18n } from "../providers/I18nProvider.jsx";
 import { posts as postList } from "../data/posts";
 import { SITE } from "../config/site";
 import { SEO } from "../components/seo/SEO.jsx";
+import GoHomeButton from "../components/ui/GoHomeButton.jsx";
 
 export default function ArticlePage() {
   const { slug } = useParams();
@@ -56,7 +57,10 @@ export default function ArticlePage() {
         <Link to="/blog" className="inline-block underline underline-offset-4 text-cyan-600 dark:text-cyan-400 hover:text-cyan-500">
           {t("article.back") || (isAr ? "← الرجوع إلى المقالات" : "← Back to Articles")}
         </Link>
+
       </div>
+      <GoHomeButton />
+
     </div>
   );
 }
