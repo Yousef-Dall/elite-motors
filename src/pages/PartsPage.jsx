@@ -188,9 +188,13 @@ export default function PartsPage() {
             <select
               value={cat}
               onChange={(e) => setCat(e.target.value)}
-              className="w-full appearance-none rounded-2xl border border-black/10 dark:border-white/10 bg-white/70 dark:bg-white/5 pl-9 pr-8 py-2"
+              className="w-full appearance-none rounded-2xl border border-black/10 dark:border-white/10 
+             bg-white/70 dark:bg-neutral-900 
+             pl-9 pr-8 py-2 
+             text-neutral-900 dark:text-white"
               aria-label={categoryFilterLabel}
             >
+              
               <option>All</option>
               {CATS.map((c) => (
                 <option key={c}>{c}</option>
@@ -204,7 +208,10 @@ export default function PartsPage() {
             <select
               value={brand}
               onChange={(e) => setBrand(e.target.value)}
-              className="w-full appearance-none rounded-2xl border border-black/10 dark:border-white/10 bg-white/70 dark:bg-white/5 pl-9 pr-8 py-2"
+              className="w-full appearance-none rounded-2xl border border-black/10 dark:border-white/10 
+             bg-white/70 dark:bg-neutral-900 
+             pl-9 pr-8 py-2 
+             text-neutral-900 dark:text-white"
               aria-label={brandFilterLabel}
             >
               <option>All</option>
@@ -219,7 +226,10 @@ export default function PartsPage() {
             <select
               value={sort}
               onChange={(e) => setSort(e.target.value)}
-              className="w-full appearance-none rounded-2xl border border-black/10 dark:border-white/10 bg-white/70 dark:bg-white/5 px-3 pr-8 py-2"
+              className="w-full appearance-none rounded-2xl border border-black/10 dark:border-white/10 
+             bg-white/70 dark:bg-neutral-900 
+             pl-9 pr-8 py-2 
+             text-neutral-900 dark:text-white"
               aria-label={sortFilterLabel}
             >
               <option value="price-asc">{priceAscLabel}</option>
