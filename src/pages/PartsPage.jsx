@@ -22,6 +22,7 @@ const CATS = [
   "Fluids",
   "Performance",
 ];
+
 const BRANDS = Array.from(new Set(PARTS.map((p) => p.brand))).sort();
 
 export default function PartsPage() {
@@ -61,6 +62,51 @@ export default function PartsPage() {
     return list;
   }, [q, cat, brand, sort]);
 
+  const title = isAr ? "قطع الغيار والإكسسوارات" : "Parts & Accessories";
+  const headerTag = SITE.name;
+  const description = isAr
+    ? "أسعار واضحة بالريال العماني تشمل الضريبة. تختلف الكمية المتوفرة حسب كل قطعة — تواصل معنا لتأكيد التوفر والتوافق مع سيارتك."
+    : "Transparent pricing in OMR. VAT included. Stock varies by item — contact us for confirmation and fitment guidance.";
+
+  const seoDescription = isAr
+    ? "كتالوج مختار من الزيوت، الفرامل، أنظمة التعليق، الإطارات وقطع الأداء مع أسعار واضحة بالريال العماني."
+    : "Curated catalog of fluids, brakes, suspension, wheels, tyres, and performance parts with transparent OMR pricing.";
+
+  const searchPlaceholder = isAr
+    ? "ابحث باسم القطعة أو الماركة أو نوع السيارة…"
+    : "Search parts, brands, fitments…";
+  const searchAriaLabel = isAr ? "بحث عن قطع الغيار" : "Search parts";
+
+  const categoryFilterLabel = isAr
+    ? "تصفية حسب الفئة"
+    : "Category filter";
+  const brandFilterLabel = isAr
+    ? "تصفية حسب العلامة التجارية"
+    : "Brand filter";
+  const sortFilterLabel = isAr ? "ترتيب النتائج" : "Sort results";
+
+  const priceAscLabel = isAr ? "السعر ↑" : "Price ↑";
+  const priceDescLabel = isAr ? "السعر ↓" : "Price ↓";
+  const nameAscLabel = isAr ? "الاسم أ–ي" : "Name A–Z";
+  const nameDescLabel = isAr ? "الاسم ي–أ" : "Name Z–A";
+
+  const inStockLabel = isAr ? "متوفر في المخزون" : "In stock";
+  const outOfStockLabel = isAr ? "غير متوفر حاليًا" : "Out of stock";
+  const fitmentLabel = isAr ? "التوافق:" : "Fitment:";
+  const orderOnWhatsAppLabel = isAr
+    ? "اطلب عبر واتساب"
+    : "Order on WhatsApp";
+  const addToQuoteLabel = isAr
+    ? "أضف لطلب عرض سعر"
+    : "Add to Quote";
+
+  const emptyStateTitle = isAr
+    ? "لم يتم العثور على قطع."
+    : "No parts found.";
+  const emptyStateBody = isAr
+    ? "جرّب تعديل البحث أو إزالة بعض الفلاتر."
+    : "Try adjusting your search or clearing some filters.";
+
   const orderWhatsApp = (item) => {
     const text = encodeURIComponent(
       `Hi ${SITE.name}, I'd like to order:\n` +
@@ -98,26 +144,28 @@ export default function PartsPage() {
       className="mx-auto max-w-7xl px-4 py-16 md:py-24"
     >
       <SEO
-        title="Parts & Accessories"
-        description="Transparent OMR pricing on fluids, brakes, suspension, wheels, tyres, and performance parts. VAT included."
+        title={title}
+        description={seoDescription}
         url={`${SITE.domain}/parts`}
       />
 
       <header
-        className={`mb-8 text-start ${isAr ? "text-right" : "text-left"}`}
+        className={`mb-8 text-start ${
+          isAr ? "text-right" : "text-left"
+        }`}
       >
         <div className="text-sm uppercase tracking-[0.25em] text-neutral-500 dark:text-white/50">
-          Elite Motors
+          {headerTag}
         </div>
         <h1 className="mt-2 text-3xl md:text-5xl font-extrabold">
-          Parts & Accessories
+          {title}
         </h1>
         <p className="mt-3 text-neutral-700 dark:text-white/70 max-w-2xl">
-          Transparent pricing in OMR. VAT included. Stock varies by item —
-          contact us for confirmation and fitment guidance.
+          {description}
         </p>
       </header>
 
+      {/* Filters */}
       <div className="mb-6 grid lg:grid-cols-4 gap-3">
         <div className="lg:col-span-2">
           <div className="flex items-center gap-2 rounded-2xl border border-black/10 dark:border-white/10 bg-white/70 dark:bg-white/5 px-3 py-2">
@@ -125,9 +173,9 @@ export default function PartsPage() {
             <input
               value={q}
               onChange={(e) => setQ(e.target.value)}
-              placeholder="Search parts, brands, fitments…"
+              placeholder={searchPlaceholder}
               className="bg-transparent outline-none w-full"
-              aria-label="Search parts"
+              aria-label={searchAriaLabel}
             />
           </div>
         </div>
@@ -139,7 +187,7 @@ export default function PartsPage() {
               value={cat}
               onChange={(e) => setCat(e.target.value)}
               className="w-full appearance-none rounded-2xl border border-black/10 dark:border-white/10 bg-white/70 dark:bg-white/5 pl-9 pr-8 py-2"
-              aria-label="Category filter"
+              aria-label={categoryFilterLabel}
             >
               <option>All</option>
               {CATS.map((c) => (
@@ -155,7 +203,7 @@ export default function PartsPage() {
               value={brand}
               onChange={(e) => setBrand(e.target.value)}
               className="w-full appearance-none rounded-2xl border border-black/10 dark:border-white/10 bg-white/70 dark:bg-white/5 pl-9 pr-8 py-2"
-              aria-label="Brand filter"
+              aria-label={brandFilterLabel}
             >
               <option>All</option>
               {BRANDS.map((b) => (
@@ -170,78 +218,92 @@ export default function PartsPage() {
               value={sort}
               onChange={(e) => setSort(e.target.value)}
               className="w-full appearance-none rounded-2xl border border-black/10 dark:border-white/10 bg-white/70 dark:bg-white/5 px-3 pr-8 py-2"
-              aria-label="Sort"
+              aria-label={sortFilterLabel}
             >
-              <option value="price-asc">Price ↑</option>
-              <option value="price-desc">Price ↓</option>
-              <option value="name-asc">Name A–Z</option>
-              <option value="name-desc">Name Z–A</option>
+              <option value="price-asc">{priceAscLabel}</option>
+              <option value="price-desc">{priceDescLabel}</option>
+              <option value="name-asc">{nameAscLabel}</option>
+              <option value="name-desc">{nameDescLabel}</option>
             </select>
             <ChevronDown className="h-4 w-4 absolute right-3 top-1/2 -translate-y-1/2 opacity-70" />
           </div>
         </div>
       </div>
 
+      {/* Grid / empty state */}
       <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-6">
-        {filtered.map((p) => (
-          <div
-            key={p.id}
-            className="p-5 rounded-3xl border border-black/10 dark:border-white/10 bg-white/70 dark:bg-white/5 shadow-md text-start"
-          >
-            <div className="aspect-[4/3] rounded-2xl overflow-hidden border border-black/10 dark:border-white/10 bg-black/5 dark:bg-white/10">
-              {p.image ? (
-                <img
-                  src={p.image}
-                  alt={p.name}
-                  className="w-full h-full object-cover"
-                />
-              ) : null}
-            </div>
-            <div className="mt-4 text-xs uppercase tracking-widest text-neutral-500 dark:text-white/50">
-              {p.brand}
-            </div>
-            <h3 className="text-lg font-semibold">{p.name}</h3>
-            <div className="text-sm text-neutral-600 dark:text-white/60">
-              {p.category}
-            </div>
-            <div className="mt-2 text-2xl font-bold text-cyan-600 dark:text-cyan-400">
-              {p.priceOMR.toFixed(2)} OMR{" "}
-              <span className="text-xs font-normal text-neutral-500">
-                (VAT incl.)
-              </span>
-            </div>
-            {p.stock <= 0 ? (
-              <div className="mt-1 text-sm text-rose-500">
-                Out of stock
-              </div>
-            ) : (
-              <div className="mt-1 text-sm text-emerald-500">
-                In stock
-              </div>
-            )}
-            {p.compatibility?.length ? (
-              <div className="mt-2 text-xs text-neutral-500 dark:text-white/50">
-                Fitment: {p.compatibility.slice(0, 3).join(", ")}
-                {p.compatibility.length > 3 ? "…" : ""}
-              </div>
-            ) : null}
-
-            <div className="mt-4 grid grid-cols-2 gap-2">
-              <button
-                onClick={() => orderWhatsApp(p)}
-                className="inline-flex items-center justify-center gap-2 px-3 py-2 rounded-xl text-white bg-emerald-600 hover:bg-emerald-500"
-              >
-                <MessageCircle className="h-4 w-4" /> Order on WhatsApp
-              </button>
-              <button
-                onClick={() => addToQuote(p)}
-                className="inline-flex items-center justify-center gap-2 px-3 py-2 rounded-xl border border-black/10 dark:border-white/15 bg-white/70 dark:bg-white/5"
-              >
-                <ShoppingCart className="h-4 w-4" /> Add to Quote
-              </button>
-            </div>
+        {filtered.length === 0 ? (
+          <div className="col-span-full rounded-3xl border border-black/10 dark:border-white/10 bg-white/70 dark:bg-white/5 p-8 text-center text-sm text-neutral-600 dark:text-white/70">
+            <div className="font-semibold mb-1">{emptyStateTitle}</div>
+            <div>{emptyStateBody}</div>
           </div>
-        ))}
+        ) : (
+          filtered.map((p) => (
+            <div
+              key={p.id}
+              className="p-5 rounded-3xl border border-black/10 dark:border-white/10 bg-white/70 dark:bg-white/5 shadow-md text-start"
+            >
+              <div className="aspect-[4/3] rounded-2xl overflow-hidden border border-black/10 dark:border-white/10 bg-black/5 dark:bg-white/10">
+                {p.image ? (
+                  <img
+                    src={p.image}
+                    alt={p.name}
+                    className="w-full h-full object-cover"
+                    loading="lazy"
+                  />
+                ) : null}
+              </div>
+              <div className="mt-4 text-xs uppercase tracking-widest text-neutral-500 dark:text-white/50">
+                {p.brand}
+              </div>
+              <h3 className="text-lg font-semibold">{p.name}</h3>
+              <div className="text-sm text-neutral-600 dark:text-white/60">
+                {p.category}
+              </div>
+              <div className="mt-2 text-2xl font-bold text-cyan-600 dark:text-cyan-400">
+                {p.priceOMR.toFixed(2)} OMR{" "}
+                <span className="text-xs font-normal text-neutral-500">
+                  (VAT incl.)
+                </span>
+              </div>
+              {p.stock <= 0 ? (
+                <div className="mt-1 text-sm text-rose-500">
+                  {outOfStockLabel}
+                </div>
+              ) : (
+                <div className="mt-1 text-sm text-emerald-500">
+                  {inStockLabel}
+                </div>
+              )}
+              {p.compatibility?.length ? (
+                <div className="mt-2 text-xs text-neutral-500 dark:text-white/50">
+                  {fitmentLabel}{" "}
+                  {p.compatibility.slice(0, 3).join(", ")}
+                  {p.compatibility.length > 3 ? "…" : ""}
+                </div>
+              ) : null}
+
+              <div className="mt-4 grid grid-cols-2 gap-2">
+                <button
+                  type="button"
+                  onClick={() => orderWhatsApp(p)}
+                  className="inline-flex items-center justify-center gap-2 px-3 py-2 rounded-xl text-white bg-emerald-600 hover:bg-emerald-500"
+                >
+                  <MessageCircle className="h-4 w-4" />
+                  {orderOnWhatsAppLabel}
+                </button>
+                <button
+                  type="button"
+                  onClick={() => addToQuote(p)}
+                  className="inline-flex items-center justify-center gap-2 px-3 py-2 rounded-xl border border-black/10 dark:border-white/15 bg-white/70 dark:bg-white/5"
+                >
+                  <ShoppingCart className="h-4 w-4" />
+                  {addToQuoteLabel}
+                </button>
+              </div>
+            </div>
+          ))
+        )}
       </div>
     </div>
   );
