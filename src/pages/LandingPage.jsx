@@ -11,6 +11,8 @@ import Location from "../components/sections/Location";
 import Testimonial from "../components/sections/Testimonial";
 import Contact from "../components/sections/Contact";
 import CTA from "../components/sections/CTA";
+import PartsCTA from "../components/sections/PartsCTA";
+import BlogCTA from "../components/sections/BlogCTA";
 import { SEO } from "../components/seo/SEO.jsx";
 import { SITE } from "../config/site";
 
@@ -41,6 +43,15 @@ export default function LandingPage() {
         className="scroll-offset py-20 md:py-28"
       >
         <Services />
+      </MotionSection>
+
+      {/* Parts CTA – directly after services */}
+      <MotionSection
+        as="section"
+        id="parts"
+        className="scroll-offset py-16 md:py-24 border-t border-black/10 dark:border-white/10 bg-white/60 dark:bg-neutral-900/60"
+      >
+        <PartsCTA />
       </MotionSection>
 
       <MotionSection
@@ -89,6 +100,15 @@ export default function LandingPage() {
         className="scroll-offset py-16 md:py-24"
       >
         <Testimonial />
+      </MotionSection>
+
+      {/* Blog CTA – after testimonials, before contact */}
+      <MotionSection
+        as="section"
+        id="blog"
+        className="scroll-offset py-16 md:py-24 border-t border-black/10 dark:border-white/10 bg-black/5 dark:bg-neutral-950/80"
+      >
+        <BlogCTA />
       </MotionSection>
 
       <MotionSection

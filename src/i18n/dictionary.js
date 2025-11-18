@@ -41,6 +41,26 @@ export const DICT = {
       csat: "Customer Satisfaction",
       csatNote: "Based on verified reviews",
     },
+    partsCta: {
+      tag: "GENUINE PARTS",
+      title: "Need reliable parts for your car?",
+      sub: "Browse our parts catalog, check compatibility, and request installation in one place.",
+      point1: "OEM and high-quality aftermarket options",
+      point2: "Verified compatibility and warranty-friendly",
+      point3: "Pick-up at our workshop or installation with your service",
+      btn: "Browse parts",
+    },
+    blogCta: {
+      tag: "TIPS & INSIGHTS",
+      title: "Learn how to care for your car like a pro",
+      sub: "From maintenance checklists to seasonal tips, our blog helps you make smarter decisions about your car.",
+      point1: "Understand when you really need a service",
+      point2: "Spot early warning signs before they become expensive",
+      point3: "Get honest explanations in simple language",
+      highlight: "New articles every week",
+      btn: "Visit the blog",
+    },
+
     services: {
       title: "Our Services",
       items: {

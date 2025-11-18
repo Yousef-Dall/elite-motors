@@ -22,20 +22,20 @@ export default function Navbar() {
       { label: t("navbar.home"), href: "/#home", id: "home" },
       { label: t("navbar.about"), href: "/#about", id: "about" },
       { label: t("navbar.services"), href: "/#services", id: "services" },
-      {
-        label: t("marquee.tag") || "Brands",
-        href: "/#marquee",
-        id: "marquee",
-      },
+      // {
+      //   label: t("marquee.tag") || "Brands",
+      //   href: "/#marquee",
+      //   id: "marquee",
+      // },
       { label: t("navbar.vm"), href: "/#vm", id: "vm" },
       { label: t("navbar.who"), href: "/#who", id: "who" },
-      {
-        label: t("gallery.title") || "Gallery",
-        href: "/#gallery",
-        id: "gallery",
-      },
+      // {
+      //   label: t("gallery.title") || "Gallery",
+      //   href: "/#gallery",
+      //   id: "gallery",
+      // },
       { label: t("navbar.location"), href: "/#location", id: "location" },
-      { label: "Testimonial", href: "/#testimonial", id: "testimonial" },
+      // { label: "Testimonial", href: "/#testimonial", id: "testimonial" },
       { label: t("navbar.contact"), href: "/#contact", id: "contact" },
     ],
     [t, lang]
