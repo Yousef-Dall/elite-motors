@@ -11,7 +11,7 @@ export const SITE = {
   phone: {
     display: "+968 0000 0000",
     e164: import.meta.env.VITE_PHONE_E164 || "+96800000000",
-    whatsapp: import.meta.env.VITE_WHATSAPP || "96800000000",
+    whatsapp: import.meta.env.VITE_WHATSAPP || "96871118753",
   },
 
   coords: {
